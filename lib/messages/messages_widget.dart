@@ -47,10 +47,6 @@ class _MessagesWidgetState extends State<MessagesWidget> {
         }
         List<ConversationRefsRecord> messagesConversationRefsRecordList =
             snapshot.data;
-        // Return an empty Container when the document does not exist.
-        if (snapshot.data.isEmpty) {
-          return Container();
-        }
         final messagesConversationRefsRecord =
             messagesConversationRefsRecordList.isNotEmpty
                 ? messagesConversationRefsRecordList.first
