@@ -10,6 +10,7 @@ import '../flutter_flow/upload_media.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileWidget extends StatefulWidget {
@@ -20,13 +21,14 @@ class ProfileWidget extends StatefulWidget {
 }
 
 class _ProfileWidgetState extends State<ProfileWidget> {
-  String uploadedFileUrl1 = '';
-  String uploadedFileUrl2 = '';
+  DateTime datePicked;
+  TextEditingController textController5;
   TextEditingController emailController;
   TextEditingController usernameController;
   TextEditingController phoneController;
   TextEditingController genderController;
-  TextEditingController textController5;
+  String uploadedFileUrl1 = '';
+  String uploadedFileUrl2 = '';
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -330,7 +332,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                               Duration(milliseconds: 2000),
                               () => setState(() {}),
                             ),
-                            autofocus: true,
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Username',
@@ -377,7 +378,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           Duration(milliseconds: 2000),
                           () => setState(() {}),
                         ),
-                        autofocus: true,
                         obscureText: false,
                         decoration: InputDecoration(
                           labelText: 'Email',
@@ -421,7 +421,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             Duration(milliseconds: 2000),
                             () => setState(() {}),
                           ),
-                          autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
                             labelText: 'Phone',
@@ -467,7 +466,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             Duration(milliseconds: 2000),
                             () => setState(() {}),
                           ),
-                          autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
                             labelText: 'Gender',
@@ -512,7 +510,24 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             Duration(milliseconds: 2000),
                             () => setState(() {}),
                           ),
-                          autofocus: true,
+                          onFieldSubmitted: (_) async {
+                            // pickDateOfBirth
+                            await DatePicker.showDatePicker(
+                              context,
+                              showTitleActions: true,
+                              onConfirm: (date) {
+                                setState(() => datePicked = date);
+                              },
+                              currentTime: getCurrentTimestamp,
+                              minTime: DateTime(0, 0, 0),
+                            );
+
+                            final userUpdateData = createUserRecordData(
+                              dateOfBirth: datePicked,
+                            );
+                            await currentUserReference.update(userUpdateData);
+                          },
+                          readOnly: true,
                           obscureText: false,
                           decoration: InputDecoration(
                             labelText: 'Date of Birth',
