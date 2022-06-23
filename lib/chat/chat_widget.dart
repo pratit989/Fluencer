@@ -22,6 +22,7 @@ class ChatWidget extends StatefulWidget {
 }
 
 class _ChatWidgetState extends State<ChatWidget> {
+  ConversationRefsRecord conversationRef2;
   ConversationRefsRecord conversationRef;
   ConversationsRecord newConversation;
   MessagesRecord firstMessage;
@@ -279,6 +280,21 @@ class _ChatWidgetState extends State<ChatWidget> {
                                 .set(messagesCreateData);
                             firstMessage = MessagesRecord.getDocumentFromData(
                                 messagesCreateData, messagesRecordReference);
+
+                            final conversationRefsCreateData =
+                                createConversationRefsRecordData(
+                              userRef: widget.userDoc.reference,
+                              conversationRef: newConversation.reference,
+                            );
+                            var conversationRefsRecordReference =
+                                ConversationRefsRecord.createDoc(
+                                    widget.userDoc.reference);
+                            await conversationRefsRecordReference
+                                .set(conversationRefsCreateData);
+                            conversationRef2 =
+                                ConversationRefsRecord.getDocumentFromData(
+                                    conversationRefsCreateData,
+                                    conversationRefsRecordReference);
 
                             setState(() {});
                           },
