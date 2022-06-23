@@ -89,46 +89,50 @@ class _ProfileWidgetState extends State<ProfileWidget> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    FlutterFlowIconButton(
-                      borderColor: Colors.transparent,
-                      borderRadius: 30,
-                      borderWidth: 1,
-                      buttonSize: 60,
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                        size: 30,
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      FlutterFlowIconButton(
+                        borderColor: Colors.transparent,
+                        borderRadius: 30,
+                        borderWidth: 1,
+                        buttonSize: 60,
+                        icon: Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                        onPressed: () async {
+                          if (scaffoldKey.currentState.isDrawerOpen ||
+                              scaffoldKey.currentState.isEndDrawerOpen) {
+                            Navigator.pop(context);
+                          }
+                        },
                       ),
-                      onPressed: () async {
-                        if (scaffoldKey.currentState.isDrawerOpen ||
-                            scaffoldKey.currentState.isEndDrawerOpen) {
-                          Navigator.pop(context);
-                        }
-                      },
-                    ),
-                    Text(
-                      'Edit Profile',
-                      style: FlutterFlowTheme.of(context).subtitle1.override(
-                            fontFamily: 'Poppins',
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
-                      child: Text(
-                        'Done',
-                        style: FlutterFlowTheme.of(context).subtitle2.override(
+                      Text(
+                        'Edit Profile',
+                        style: FlutterFlowTheme.of(context).subtitle1.override(
                               fontFamily: 'Poppins',
-                              color: Color(0xFFFF640D),
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
                             ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                        child: Text(
+                          'Done',
+                          style:
+                              FlutterFlowTheme.of(context).subtitle2.override(
+                                    fontFamily: 'Poppins',
+                                    color: Color(0xFFFF640D),
+                                  ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
