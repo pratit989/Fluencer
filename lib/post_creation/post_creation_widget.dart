@@ -71,7 +71,6 @@ class _PostCreationWidgetState extends State<PostCreationWidget> {
                       Duration(milliseconds: 2000),
                       () => setState(() {}),
                     ),
-                    autofocus: true,
                     obscureText: false,
                     decoration: InputDecoration(
                       labelText: 'Description',
