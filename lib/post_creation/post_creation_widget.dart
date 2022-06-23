@@ -113,86 +113,92 @@ class _PostCreationWidgetState extends State<PostCreationWidget> {
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(),
-                    child: Stack(
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional(0, 0),
-                                child: FlutterFlowIconButton(
-                                  borderColor: Color(0xFFFF640D),
-                                  borderRadius: 30,
-                                  borderWidth: 1,
-                                  buttonSize: 120,
-                                  icon: Icon(
-                                    Icons.cloud_upload,
-                                    color: Color(0xFFFF640D),
-                                    size: 60,
-                                  ),
-                                  onPressed: () async {
-                                    setState(() =>
-                                        FFAppState().uploadSelectionVisiblity =
-                                            !(FFAppState()
-                                                .uploadSelectionVisiblity));
-                                  },
-                                ),
-                              ),
-                              Align(
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 10, 0, 0),
-                                  child: Text(
-                                    'Upload Media',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'Poppins',
-                                          color: Colors.white,
-                                        ),
+                    child: Visibility(
+                      visible: !(FFAppState().uploadSelectionVisiblity) ?? true,
+                      child: Stack(
+                        children: [
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Align(
+                                  alignment: AlignmentDirectional(0, 0),
+                                  child: FlutterFlowIconButton(
+                                    borderColor: Color(0xFFFF640D),
+                                    borderRadius: 30,
+                                    borderWidth: 1,
+                                    buttonSize: 120,
+                                    icon: Icon(
+                                      Icons.cloud_upload,
+                                      color: Color(0xFFFF640D),
+                                      size: 60,
+                                    ),
+                                    onPressed: () async {
+                                      setState(() => FFAppState()
+                                              .uploadSelectionVisiblity =
+                                          !(FFAppState()
+                                              .uploadSelectionVisiblity));
+                                    },
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        if ((FFAppState().currentPostType) == 'img')
-                          Align(
-                            alignment: AlignmentDirectional(0, 0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  20, 20, 20, 20),
-                              child: Image.network(
-                                uploadedFileUrl2,
-                                width: MediaQuery.of(context).size.width,
-                                height: MediaQuery.of(context).size.height * 1,
-                                fit: BoxFit.contain,
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(0, 0),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 10, 0, 0),
+                                    child: Text(
+                                      'Upload Media',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            color: Colors.white,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        if ((FFAppState().currentPostType) == 'video')
-                          Align(
-                            alignment: AlignmentDirectional(0, 0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  20, 20, 20, 20),
-                              child: FlutterFlowVideoPlayer(
-                                path: uploadedFileUrl1,
-                                videoType: VideoType.network,
-                                width: MediaQuery.of(context).size.width,
-                                height: MediaQuery.of(context).size.height * 1,
-                                autoPlay: false,
-                                looping: true,
-                                showControls: true,
-                                allowFullScreen: true,
-                                allowPlaybackSpeedMenu: false,
+                          if ((FFAppState().currentPostType) == 'img')
+                            Align(
+                              alignment: AlignmentDirectional(0, 0),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    20, 20, 20, 20),
+                                child: Image.network(
+                                  uploadedFileUrl2,
+                                  width: MediaQuery.of(context).size.width,
+                                  height:
+                                      MediaQuery.of(context).size.height * 1,
+                                  fit: BoxFit.contain,
+                                ),
                               ),
                             ),
-                          ),
-                      ],
+                          if ((FFAppState().currentPostType) == 'video')
+                            Align(
+                              alignment: AlignmentDirectional(0, 0),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    20, 20, 20, 20),
+                                child: FlutterFlowVideoPlayer(
+                                  path: uploadedFileUrl1,
+                                  videoType: VideoType.network,
+                                  width: MediaQuery.of(context).size.width,
+                                  height:
+                                      MediaQuery.of(context).size.height * 1,
+                                  autoPlay: false,
+                                  looping: true,
+                                  showControls: true,
+                                  allowFullScreen: true,
+                                  allowPlaybackSpeedMenu: false,
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
