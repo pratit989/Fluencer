@@ -79,10 +79,13 @@ class _MyAppState extends State<MyApp> {
       home: initialUser == null || displaySplashImage
           ? Container(
               color: FlutterFlowTheme.of(context).alternate,
-              child: Builder(
-                builder: (context) => Image.asset(
-                  'assets/images/WhatsApp_Image_2022-06-18_at_7.07.50_PM.jpeg',
-                  fit: BoxFit.contain,
+              child: Center(
+                child: Builder(
+                  builder: (context) => Image.asset(
+                    'assets/images/WhatsApp_Image_2022-06-18_at_7.07.50_PM.jpeg',
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
             )
