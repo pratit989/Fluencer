@@ -1,7 +1,14 @@
-import '../components/upload_selection_widget.dart';
+import '../auth/auth_util.dart';
+import '../backend/backend.dart';
+import '../backend/firebase_storage/storage.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../flutter_flow/flutter_flow_video_player.dart';
+import '../flutter_flow/flutter_flow_widgets.dart';
+import '../flutter_flow/upload_media.dart';
+import '../main.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,7 +21,10 @@ class PostCreationWidget extends StatefulWidget {
 }
 
 class _PostCreationWidgetState extends State<PostCreationWidget> {
+  PostsRecord newPostDocument;
   TextEditingController textController;
+  String uploadedFileUrl1 = '';
+  String uploadedFileUrl2 = '';
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -101,65 +111,289 @@ class _PostCreationWidgetState extends State<PostCreationWidget> {
                     maxLines: 8,
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(),
+                    child: Stack(
                       children: [
-                        Align(
-                          alignment: AlignmentDirectional(0, 0),
-                          child: FlutterFlowIconButton(
-                            borderColor: Color(0xFFFF640D),
-                            borderRadius: 30,
-                            borderWidth: 1,
-                            buttonSize: 120,
-                            icon: Icon(
-                              Icons.cloud_upload,
-                              color: Color(0xFFFF640D),
-                              size: 60,
-                            ),
-                            onPressed: () async {
-                              await showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                context: context,
-                                builder: (context) {
-                                  return Padding(
-                                    padding: MediaQuery.of(context).viewInsets,
-                                    child: Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.3,
-                                      child: UploadSelectionWidget(),
-                                    ),
-                                  );
-                                },
-                              );
-                            },
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Align(
+                                alignment: AlignmentDirectional(0, 0),
+                                child: FlutterFlowIconButton(
+                                  borderColor: Color(0xFFFF640D),
+                                  borderRadius: 30,
+                                  borderWidth: 1,
+                                  buttonSize: 120,
+                                  icon: Icon(
+                                    Icons.cloud_upload,
+                                    color: Color(0xFFFF640D),
+                                    size: 60,
+                                  ),
+                                  onPressed: () async {
+                                    setState(() => FFAppState()
+                                            .uploadSelectionVisiblity =
+                                        FFAppState().uploadSelectionVisiblity);
+                                  },
+                                ),
+                              ),
+                              Align(
+                                alignment: AlignmentDirectional(0, 0),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 10, 0, 0),
+                                  child: Text(
+                                    'Upload Media',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Poppins',
+                                          color: Colors.white,
+                                        ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        Align(
-                          alignment: AlignmentDirectional(0, 0),
-                          child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                            child: Text(
-                              'Upload Media',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
+                        if ((FFAppState().currentPostType) == 'img')
+                          Align(
+                            alignment: AlignmentDirectional(0, 0),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  20, 20, 20, 20),
+                              child: Image.network(
+                                uploadedFileUrl2,
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height * 1,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                          ),
+                        if ((FFAppState().currentPostType) == 'video')
+                          Align(
+                            alignment: AlignmentDirectional(0, 0),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  20, 20, 20, 20),
+                              child: FlutterFlowVideoPlayer(
+                                path: uploadedFileUrl1,
+                                videoType: VideoType.network,
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height * 1,
+                                autoPlay: false,
+                                looping: true,
+                                showControls: true,
+                                allowFullScreen: true,
+                                allowPlaybackSpeedMenu: false,
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+                if (!(FFAppState().uploadSelectionVisiblity) ?? true)
+                  Align(
+                    alignment: AlignmentDirectional(0, 0),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          final postsCreateData = createPostsRecordData(
+                            postImgUrl: uploadedFileUrl2,
+                            postVideoUrl: uploadedFileUrl1,
+                            postType: FFAppState().currentPostType,
+                            postTime: getCurrentTimestamp,
+                            description: textController.text,
+                          );
+                          var postsRecordReference =
+                              PostsRecord.createDoc(currentUserReference);
+                          await postsRecordReference.set(postsCreateData);
+                          newPostDocument = PostsRecord.getDocumentFromData(
+                              postsCreateData, postsRecordReference);
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  NavBarPage(initialPage: 'Profile'),
+                            ),
+                          );
+
+                          setState(() {});
+                        },
+                        text: 'Submit Post',
+                        options: FFButtonOptions(
+                          width: 130,
+                          height: 40,
+                          color: Color(0xFFFF640D),
+                          textStyle:
+                              FlutterFlowTheme.of(context).subtitle2.override(
                                     fontFamily: 'Poppins',
                                     color: Colors.white,
                                   ),
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
+                          ),
+                          borderRadius: 12,
+                        ),
+                      ),
+                    ),
+                  ),
+                if (FFAppState().uploadSelectionVisiblity ?? true)
+                  Container(
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).primaryColor,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                          child: InkWell(
+                            onTap: () async {
+                              // VideoUpload
+                              final selectedMedia =
+                                  await selectMediaWithSourceBottomSheet(
+                                context: context,
+                                allowPhoto: false,
+                                allowVideo: true,
+                              );
+                              if (selectedMedia != null &&
+                                  selectedMedia.every((m) => validateFileFormat(
+                                      m.storagePath, context))) {
+                                showUploadMessage(
+                                  context,
+                                  'Uploading file...',
+                                  showLoading: true,
+                                );
+                                final downloadUrls = (await Future.wait(
+                                        selectedMedia.map((m) async =>
+                                            await uploadData(
+                                                m.storagePath, m.bytes))))
+                                    .where((u) => u != null)
+                                    .toList();
+                                ScaffoldMessenger.of(context)
+                                    .hideCurrentSnackBar();
+                                if (downloadUrls != null &&
+                                    downloadUrls.length ==
+                                        selectedMedia.length) {
+                                  setState(() =>
+                                      uploadedFileUrl1 = downloadUrls.first);
+                                  showUploadMessage(
+                                    context,
+                                    'Success!',
+                                  );
+                                } else {
+                                  showUploadMessage(
+                                    context,
+                                    'Failed to upload media',
+                                  );
+                                  return;
+                                }
+                              }
+
+                              setState(() => FFAppState()
+                                  .uploadSelectionVisiblity = false);
+                            },
+                            child: ListTile(
+                              title: Text(
+                                'Upload a new Video',
+                                style: FlutterFlowTheme.of(context)
+                                    .title3
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryBtnText,
+                                    ),
+                              ),
+                              trailing: Icon(
+                                Icons.arrow_forward_ios,
+                                color: Color(0xFFFF640D),
+                                size: 20,
+                              ),
+                              dense: false,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                          child: InkWell(
+                            onTap: () async {
+                              // PhotoUpload
+                              final selectedMedia =
+                                  await selectMediaWithSourceBottomSheet(
+                                context: context,
+                                allowPhoto: true,
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).primaryColor,
+                                textColor:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
+                              );
+                              if (selectedMedia != null &&
+                                  selectedMedia.every((m) => validateFileFormat(
+                                      m.storagePath, context))) {
+                                showUploadMessage(
+                                  context,
+                                  'Uploading file...',
+                                  showLoading: true,
+                                );
+                                final downloadUrls = (await Future.wait(
+                                        selectedMedia.map((m) async =>
+                                            await uploadData(
+                                                m.storagePath, m.bytes))))
+                                    .where((u) => u != null)
+                                    .toList();
+                                ScaffoldMessenger.of(context)
+                                    .hideCurrentSnackBar();
+                                if (downloadUrls != null &&
+                                    downloadUrls.length ==
+                                        selectedMedia.length) {
+                                  setState(() =>
+                                      uploadedFileUrl2 = downloadUrls.first);
+                                  showUploadMessage(
+                                    context,
+                                    'Success!',
+                                  );
+                                } else {
+                                  showUploadMessage(
+                                    context,
+                                    'Failed to upload media',
+                                  );
+                                  return;
+                                }
+                              }
+
+                              setState(() => FFAppState()
+                                  .uploadSelectionVisiblity = false);
+                            },
+                            child: ListTile(
+                              title: Text(
+                                'Upload a new Photo',
+                                style: FlutterFlowTheme.of(context)
+                                    .title3
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryBtnText,
+                                    ),
+                              ),
+                              trailing: Icon(
+                                Icons.arrow_forward_ios,
+                                color: Color(0xFFFF640D),
+                                size: 20,
+                              ),
+                              dense: false,
                             ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                ),
               ],
             ),
           ),

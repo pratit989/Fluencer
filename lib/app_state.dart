@@ -20,9 +20,9 @@ class FFAppState {
 
   String OTP = '';
 
-  String currentPostUpload;
+  String currentPostType = '';
 
-  String currentPostVideoUpload;
+  bool uploadSelectionVisiblity = false;
 }
 
 LatLng _latLngFromString(String val) {

@@ -18,121 +18,128 @@ class _UploadSelectionWidgetState extends State<UploadSelectionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-          child: InkWell(
-            onTap: () async {
-              final selectedMedia = await selectMediaWithSourceBottomSheet(
-                context: context,
-                allowPhoto: false,
-                allowVideo: true,
-              );
-              if (selectedMedia != null &&
-                  selectedMedia.every(
-                      (m) => validateFileFormat(m.storagePath, context))) {
-                showUploadMessage(
-                  context,
-                  'Uploading file...',
-                  showLoading: true,
+    return Container(
+      decoration: BoxDecoration(
+        color: FlutterFlowTheme.of(context).primaryColor,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+            child: InkWell(
+              onTap: () async {
+                final selectedMedia = await selectMediaWithSourceBottomSheet(
+                  context: context,
+                  allowPhoto: true,
+                  allowVideo: true,
                 );
-                final downloadUrls = (await Future.wait(selectedMedia.map(
-                        (m) async => await uploadData(m.storagePath, m.bytes))))
-                    .where((u) => u != null)
-                    .toList();
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                if (downloadUrls != null &&
-                    downloadUrls.length == selectedMedia.length) {
-                  setState(() => uploadedFileUrl1 = downloadUrls.first);
+                if (selectedMedia != null &&
+                    selectedMedia.every(
+                        (m) => validateFileFormat(m.storagePath, context))) {
                   showUploadMessage(
                     context,
-                    'Success!',
+                    'Uploading file...',
+                    showLoading: true,
                   );
-                } else {
-                  showUploadMessage(
-                    context,
-                    'Failed to upload media',
-                  );
-                  return;
+                  final downloadUrls = (await Future.wait(selectedMedia.map(
+                          (m) async =>
+                              await uploadData(m.storagePath, m.bytes))))
+                      .where((u) => u != null)
+                      .toList();
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                  if (downloadUrls != null &&
+                      downloadUrls.length == selectedMedia.length) {
+                    setState(() => uploadedFileUrl1 = downloadUrls.first);
+                    showUploadMessage(
+                      context,
+                      'Success!',
+                    );
+                  } else {
+                    showUploadMessage(
+                      context,
+                      'Failed to upload media',
+                    );
+                    return;
+                  }
                 }
-              }
-            },
-            child: ListTile(
-              title: Text(
-                'Upload a new Video',
-                style: FlutterFlowTheme.of(context).title3.override(
-                      fontFamily: 'Poppins',
-                      color: Color(0x7FFFFFFF),
-                    ),
+              },
+              child: ListTile(
+                title: Text(
+                  'Upload a new Video',
+                  style: FlutterFlowTheme.of(context).title3.override(
+                        fontFamily: 'Poppins',
+                        color: FlutterFlowTheme.of(context).primaryBtnText,
+                      ),
+                ),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Color(0xFFFF640D),
+                  size: 20,
+                ),
+                dense: false,
               ),
-              trailing: Icon(
-                Icons.arrow_forward_ios,
-                color: Color(0xFFFF640D),
-                size: 20,
-              ),
-              dense: false,
             ),
           ),
-        ),
-        Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-          child: InkWell(
-            onTap: () async {
-              final selectedMedia = await selectMediaWithSourceBottomSheet(
-                context: context,
-                allowPhoto: true,
-                backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-                textColor: FlutterFlowTheme.of(context).primaryBtnText,
-              );
-              if (selectedMedia != null &&
-                  selectedMedia.every(
-                      (m) => validateFileFormat(m.storagePath, context))) {
-                showUploadMessage(
-                  context,
-                  'Uploading file...',
-                  showLoading: true,
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+            child: InkWell(
+              onTap: () async {
+                final selectedMedia = await selectMediaWithSourceBottomSheet(
+                  context: context,
+                  allowPhoto: true,
+                  backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+                  textColor: FlutterFlowTheme.of(context).primaryBtnText,
                 );
-                final downloadUrls = (await Future.wait(selectedMedia.map(
-                        (m) async => await uploadData(m.storagePath, m.bytes))))
-                    .where((u) => u != null)
-                    .toList();
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                if (downloadUrls != null &&
-                    downloadUrls.length == selectedMedia.length) {
-                  setState(() => uploadedFileUrl2 = downloadUrls.first);
+                if (selectedMedia != null &&
+                    selectedMedia.every(
+                        (m) => validateFileFormat(m.storagePath, context))) {
                   showUploadMessage(
                     context,
-                    'Success!',
+                    'Uploading file...',
+                    showLoading: true,
                   );
-                } else {
-                  showUploadMessage(
-                    context,
-                    'Failed to upload media',
-                  );
-                  return;
+                  final downloadUrls = (await Future.wait(selectedMedia.map(
+                          (m) async =>
+                              await uploadData(m.storagePath, m.bytes))))
+                      .where((u) => u != null)
+                      .toList();
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                  if (downloadUrls != null &&
+                      downloadUrls.length == selectedMedia.length) {
+                    setState(() => uploadedFileUrl2 = downloadUrls.first);
+                    showUploadMessage(
+                      context,
+                      'Success!',
+                    );
+                  } else {
+                    showUploadMessage(
+                      context,
+                      'Failed to upload media',
+                    );
+                    return;
+                  }
                 }
-              }
-            },
-            child: ListTile(
-              title: Text(
-                'Upload a new Photo',
-                style: FlutterFlowTheme.of(context).title3.override(
-                      fontFamily: 'Poppins',
-                      color: Color(0x7FFFFFFF),
-                    ),
+              },
+              child: ListTile(
+                title: Text(
+                  'Upload a new Photo',
+                  style: FlutterFlowTheme.of(context).title3.override(
+                        fontFamily: 'Poppins',
+                        color: FlutterFlowTheme.of(context).primaryBtnText,
+                      ),
+                ),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Color(0xFFFF640D),
+                  size: 20,
+                ),
+                dense: false,
               ),
-              trailing: Icon(
-                Icons.arrow_forward_ios,
-                color: Color(0xFFFF640D),
-                size: 20,
-              ),
-              dense: false,
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

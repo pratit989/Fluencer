@@ -35,6 +35,9 @@ abstract class PostsRecord implements Built<PostsRecord, PostsRecordBuilder> {
   BuiltList<DocumentReference> get comments;
 
   @nullable
+  String get description;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
@@ -46,7 +49,8 @@ abstract class PostsRecord implements Built<PostsRecord, PostsRecordBuilder> {
     ..postType = ''
     ..likes = ListBuilder()
     ..fire = ListBuilder()
-    ..comments = ListBuilder();
+    ..comments = ListBuilder()
+    ..description = '';
 
   static Query<Map<String, dynamic>> collection([DocumentReference parent]) =>
       parent != null
@@ -79,6 +83,7 @@ Map<String, dynamic> createPostsRecordData({
   String postVideoUrl,
   String postType,
   DateTime postTime,
+  String description,
 }) =>
     serializers.toFirestore(
         PostsRecord.serializer,
@@ -89,4 +94,5 @@ Map<String, dynamic> createPostsRecordData({
           ..likes = null
           ..postTime = postTime
           ..fire = null
-          ..comments = null));
+          ..comments = null
+          ..description = description));
