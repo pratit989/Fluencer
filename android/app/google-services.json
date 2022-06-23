@@ -1,0 +1,78 @@
+{
+  "project_info": {
+    "project_number": "578765893942",
+    "project_id": "fluncer-88b1f",
+    "storage_bucket": "fluncer-88b1f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:578765893942:android:6cb49efd3a30421c4e4397",
+        "android_client_info": {
+          "package_name": "com.connectia.fluncer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "578765893942-4rikui7iodfkpa38ebl0nr2qkovuqe0o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.connectia.fluncer",
+            "certificate_hash": "fc66466a8dbeadb160b2252352cc6a3ba74fc444"
+          }
+        },
+        {
+          "client_id": "578765893942-54cj7lnouh8alrkied2blkl9cla470mv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.connectia.fluncer",
+            "certificate_hash": "5e3b4dcf80e56356769cecdd4c7a1ceccdae55f3"
+          }
+        },
+        {
+          "client_id": "578765893942-9k9cgk9ifru4f818ktn2vjd79o2s77d1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.connectia.fluncer",
+            "certificate_hash": "62a13ed4251955648587107439374517b29f7bb8"
+          }
+        },
+        {
+          "client_id": "578765893942-m4i47rgja35udl67ef7r907b92rj4lpq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.connectia.fluncer",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "578765893942-ta0rlkj80o7ts9c3coesieq4tb93e0qb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrII6jUSUZymxBo1xL9OdteiqgSR9X_gQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "578765893942-ta0rlkj80o7ts9c3coesieq4tb93e0qb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "578765893942-s0r0j4f6ha4o78c8uf76029dlgljjj06.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.connectia.fluncer"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
