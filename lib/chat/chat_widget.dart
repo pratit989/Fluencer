@@ -255,7 +255,7 @@ class _ChatWidgetState extends State<ChatWidget> {
 
                             final conversationRefsCreateData =
                                 createConversationRefsRecordData(
-                              userRef: currentUserReference,
+                              userRef: widget.userDoc.reference,
                               conversationRef: newConversation.reference,
                             );
                             var conversationRefsRecordReference =
@@ -283,7 +283,7 @@ class _ChatWidgetState extends State<ChatWidget> {
 
                             final conversationRefsCreateData =
                                 createConversationRefsRecordData(
-                              userRef: widget.userDoc.reference,
+                              userRef: currentUserReference,
                               conversationRef: newConversation.reference,
                             );
                             var conversationRefsRecordReference =
