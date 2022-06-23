@@ -91,27 +91,30 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      FlutterFlowIconButton(
-                        borderColor: Colors.transparent,
-                        borderRadius: 30,
-                        borderWidth: 1,
-                        buttonSize: 60,
-                        icon: Icon(
-                          Icons.arrow_back_outlined,
-                          color: Colors.white,
-                          size: 30,
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        FlutterFlowIconButton(
+                          borderColor: Colors.transparent,
+                          borderRadius: 30,
+                          borderWidth: 1,
+                          buttonSize: 60,
+                          icon: Icon(
+                            Icons.arrow_back_outlined,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                          onPressed: () async {
+                            if (scaffoldKey.currentState.isDrawerOpen ||
+                                scaffoldKey.currentState.isEndDrawerOpen) {
+                              Navigator.pop(context);
+                            }
+                          },
                         ),
-                        onPressed: () async {
-                          if (scaffoldKey.currentState.isDrawerOpen ||
-                              scaffoldKey.currentState.isEndDrawerOpen) {
-                            Navigator.pop(context);
-                          }
-                        },
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   Text(
                     'Settings',
