@@ -68,7 +68,6 @@ class _MessagesWidgetState extends State<MessagesWidget> {
                         Duration(milliseconds: 2000),
                         () => setState(() {}),
                       ),
-                      autofocus: true,
                       obscureText: false,
                       decoration: InputDecoration(
                         hintText: 'Messages',
@@ -95,7 +94,7 @@ class _MessagesWidgetState extends State<MessagesWidget> {
                         prefixIcon: Icon(
                           Icons.search,
                           color: Color(0xFFFF640D),
-                          size: 15,
+                          size: 20,
                         ),
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1.override(
