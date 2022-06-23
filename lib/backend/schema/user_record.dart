@@ -47,6 +47,12 @@ abstract class UserRecord implements Built<UserRecord, UserRecordBuilder> {
   int get totalFire;
 
   @nullable
+  BuiltList<DocumentReference> get followers;
+
+  @nullable
+  BuiltList<DocumentReference> get following;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
@@ -58,7 +64,9 @@ abstract class UserRecord implements Built<UserRecord, UserRecordBuilder> {
     ..phoneNumber = ''
     ..wallpaperUrl = ''
     ..gender = ''
-    ..totalFire = 0;
+    ..totalFire = 0
+    ..followers = ListBuilder()
+    ..following = ListBuilder();
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('user');
@@ -104,4 +112,6 @@ Map<String, dynamic> createUserRecordData({
           ..wallpaperUrl = wallpaperUrl
           ..gender = gender
           ..dateOfBirth = dateOfBirth
-          ..totalFire = totalFire));
+          ..totalFire = totalFire
+          ..followers = null
+          ..following = null));

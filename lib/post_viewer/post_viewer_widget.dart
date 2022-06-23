@@ -5,6 +5,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_toggle_icon.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_video_player.dart';
+import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -56,160 +57,301 @@ class _PostViewerWidgetState extends State<PostViewerWidget> {
                   height: MediaQuery.of(context).size.height * 1,
                   child: Stack(
                     children: [
-                      FlutterFlowVideoPlayer(
-                        path:
-                            'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4',
-                        videoType: VideoType.network,
-                        autoPlay: false,
-                        looping: true,
-                        showControls: true,
-                        allowFullScreen: true,
-                        allowPlaybackSpeedMenu: false,
-                      ),
-                      Image.network(
-                        'https://picsum.photos/seed/474/600',
-                        fit: BoxFit.cover,
-                      ),
+                      if ((postViewerPostsRecord.postType) == 'video')
+                        FlutterFlowVideoPlayer(
+                          path: postViewerPostsRecord.postVideoUrl,
+                          videoType: VideoType.network,
+                          autoPlay: false,
+                          looping: true,
+                          showControls: true,
+                          allowFullScreen: true,
+                          allowPlaybackSpeedMenu: false,
+                        ),
+                      if ((postViewerPostsRecord.postType) == 'img')
+                        Image.network(
+                          postViewerPostsRecord.postImgUrl,
+                          fit: BoxFit.cover,
+                        ),
                       Align(
                         alignment: AlignmentDirectional(0, 1),
-                        child: StreamBuilder<UserRecord>(
-                          stream: UserRecord.getDocument(
-                              postViewerPostsRecord.parentReference),
-                          builder: (context, snapshot) {
-                            // Customize what your widget looks like when it's loading.
-                            if (!snapshot.hasData) {
-                              return Center(
-                                child: SizedBox(
-                                  width: 50,
-                                  height: 50,
-                                  child: CircularProgressIndicator(
-                                    color: Color(0xFFFF640D),
-                                  ),
-                                ),
-                              );
-                            }
-                            final rowUserRecord = snapshot.data;
-                            return Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      5, 5, 5, 5),
-                                  child: Container(
-                                    width: 60,
-                                    height: 60,
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 10),
+                          child: StreamBuilder<UserRecord>(
+                            stream: UserRecord.getDocument(
+                                postViewerPostsRecord.parentReference),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 50,
+                                    height: 50,
+                                    child: CircularProgressIndicator(
+                                      color: Color(0xFFFF640D),
                                     ),
-                                    child: Image.network(
-                                      valueOrDefault<String>(
-                                        rowUserRecord.photoUrl,
-                                        'https://st3.depositphotos.com/6672868/13701/v/600/depositphotos_137014128-stock-illustration-user-profile-icon.jpg',
+                                  ),
+                                );
+                              }
+                              final rowUserRecord = snapshot.data;
+                              return Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        5, 5, 5, 5),
+                                    child: Container(
+                                      width: 60,
+                                      height: 60,
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Image.network(
+                                        valueOrDefault<String>(
+                                          rowUserRecord.photoUrl,
+                                          'https://st3.depositphotos.com/6672868/13701/v/600/depositphotos_137014128-stock-illustration-user-profile-icon.jpg',
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      valueOrDefault<String>(
-                                        rowUserRecord.displayName,
-                                        'Unknown',
+                                  Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        valueOrDefault<String>(
+                                          rowUserRecord.displayName,
+                                          'Unknown',
+                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              fontFamily: 'Poppins',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryBtnText,
+                                            ),
                                       ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryBtnText,
+                                      if (!((currentUserDocument?.following
+                                                      ?.toList() ??
+                                                  [])
+                                              .contains(
+                                                  rowUserRecord.reference)) ??
+                                          true)
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  5, 5, 5, 5),
+                                          child: AuthUserStreamWidget(
+                                            child: FFButtonWidget(
+                                              onPressed: () async {
+                                                if (!((currentUserDocument
+                                                            ?.following
+                                                            ?.toList() ??
+                                                        [])
+                                                    .contains(rowUserRecord
+                                                        .reference))) {
+                                                  final userUpdateData = {
+                                                    'following':
+                                                        FieldValue.arrayUnion([
+                                                      rowUserRecord.reference
+                                                    ]),
+                                                  };
+                                                  await currentUserReference
+                                                      .update(userUpdateData);
+                                                }
+                                                if ((currentUserDocument
+                                                            ?.following
+                                                            ?.toList() ??
+                                                        [])
+                                                    .contains(rowUserRecord
+                                                        .reference)) {
+                                                  final userUpdateData = {
+                                                    'followers':
+                                                        FieldValue.arrayUnion([
+                                                      currentUserReference
+                                                    ]),
+                                                  };
+                                                  await rowUserRecord.reference
+                                                      .update(userUpdateData);
+                                                }
+                                              },
+                                              text: 'Follow',
+                                              options: FFButtonOptions(
+                                                width: 120,
+                                                height: 25,
+                                                color: Color(0xFFFF640D),
+                                                textStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .subtitle2
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          color: Colors.white,
+                                                          fontSize: 14,
+                                                        ),
+                                                borderSide: BorderSide(
+                                                  color: Colors.transparent,
+                                                  width: 1,
+                                                ),
+                                                borderRadius: 12,
+                                              ),
+                                            ),
                                           ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            );
-                          },
+                                        ),
+                                      if ((currentUserDocument?.following
+                                                      ?.toList() ??
+                                                  [])
+                                              ?.contains(
+                                                  rowUserRecord.reference) ??
+                                          true)
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  5, 5, 5, 5),
+                                          child: AuthUserStreamWidget(
+                                            child: FFButtonWidget(
+                                              onPressed: () async {
+                                                if ((currentUserDocument
+                                                            ?.following
+                                                            ?.toList() ??
+                                                        [])
+                                                    .contains(rowUserRecord
+                                                        .reference)) {
+                                                  final userUpdateData = {
+                                                    'following':
+                                                        FieldValue.arrayRemove([
+                                                      rowUserRecord.reference
+                                                    ]),
+                                                  };
+                                                  await currentUserReference
+                                                      .update(userUpdateData);
+                                                }
+                                                if (!((currentUserDocument
+                                                            ?.following
+                                                            ?.toList() ??
+                                                        [])
+                                                    .contains(rowUserRecord
+                                                        .reference))) {
+                                                  final userUpdateData = {
+                                                    'followers':
+                                                        FieldValue.arrayRemove([
+                                                      currentUserReference
+                                                    ]),
+                                                  };
+                                                  await rowUserRecord.reference
+                                                      .update(userUpdateData);
+                                                }
+                                              },
+                                              text: 'Following',
+                                              options: FFButtonOptions(
+                                                width: 120,
+                                                height: 25,
+                                                color: Color(0xFFFF640D),
+                                                textStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .subtitle2
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          color: Colors.white,
+                                                          fontSize: 14,
+                                                        ),
+                                                borderSide: BorderSide(
+                                                  color: Colors.transparent,
+                                                  width: 1,
+                                                ),
+                                                borderRadius: 12,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
                         ),
                       ),
                       Align(
                         alignment: AlignmentDirectional(1, 1),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ToggleIcon(
-                              onPressed: () async {
-                                final likesElement = currentUserReference;
-                                final likesUpdate = postViewerPostsRecord.likes
-                                        .toList()
-                                        .contains(likesElement)
-                                    ? FieldValue.arrayRemove([likesElement])
-                                    : FieldValue.arrayUnion([likesElement]);
-                                final postsUpdateData = {
-                                  'likes': likesUpdate,
-                                };
-                                await postViewerPostsRecord.reference
-                                    .update(postsUpdateData);
-                              },
-                              value: postViewerPostsRecord.likes
-                                  .toList()
-                                  .contains(currentUserReference),
-                              onIcon: Icon(
-                                Icons.favorite,
-                                color: FlutterFlowTheme.of(context).alternate,
-                                size: 40,
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              ToggleIcon(
+                                onPressed: () async {
+                                  final likesElement = currentUserReference;
+                                  final likesUpdate = postViewerPostsRecord
+                                          .likes
+                                          .toList()
+                                          .contains(likesElement)
+                                      ? FieldValue.arrayRemove([likesElement])
+                                      : FieldValue.arrayUnion([likesElement]);
+                                  final postsUpdateData = {
+                                    'likes': likesUpdate,
+                                  };
+                                  await postViewerPostsRecord.reference
+                                      .update(postsUpdateData);
+                                },
+                                value: postViewerPostsRecord.likes
+                                    .toList()
+                                    .contains(currentUserReference),
+                                onIcon: Icon(
+                                  Icons.favorite,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  size: 40,
+                                ),
+                                offIcon: Icon(
+                                  Icons.favorite_border,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  size: 40,
+                                ),
                               ),
-                              offIcon: Icon(
-                                Icons.favorite_border,
-                                color: FlutterFlowTheme.of(context).alternate,
-                                size: 40,
+                              FlutterFlowIconButton(
+                                borderColor: Colors.transparent,
+                                borderRadius: 30,
+                                borderWidth: 1,
+                                buttonSize: 60,
+                                icon: Icon(
+                                  Icons.comment,
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBtnText,
+                                  size: 30,
+                                ),
+                                onPressed: () {
+                                  print('IconButton pressed ...');
+                                },
                               ),
-                            ),
-                            FlutterFlowIconButton(
-                              borderColor: Colors.transparent,
-                              borderRadius: 30,
-                              borderWidth: 1,
-                              buttonSize: 60,
-                              icon: Icon(
-                                Icons.comment,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryBtnText,
-                                size: 30,
+                              ToggleIcon(
+                                onPressed: () async {
+                                  final fireElement = currentUserReference;
+                                  final fireUpdate = postViewerPostsRecord.fire
+                                          .toList()
+                                          .contains(fireElement)
+                                      ? FieldValue.arrayRemove([fireElement])
+                                      : FieldValue.arrayUnion([fireElement]);
+                                  final postsUpdateData = {
+                                    'fire': fireUpdate,
+                                  };
+                                  await postViewerPostsRecord.reference
+                                      .update(postsUpdateData);
+                                },
+                                value: postViewerPostsRecord.fire
+                                    .toList()
+                                    .contains(currentUserReference),
+                                onIcon: Icon(
+                                  Icons.local_fire_department,
+                                  color: Color(0xFFFF640D),
+                                  size: 40,
+                                ),
+                                offIcon: Icon(
+                                  Icons.local_fire_department_rounded,
+                                  color: Color(0xFFFF640D),
+                                  size: 40,
+                                ),
                               ),
-                              onPressed: () {
-                                print('IconButton pressed ...');
-                              },
-                            ),
-                            ToggleIcon(
-                              onPressed: () async {
-                                final fireElement = currentUserReference;
-                                final fireUpdate = postViewerPostsRecord.fire
-                                        .toList()
-                                        .contains(fireElement)
-                                    ? FieldValue.arrayRemove([fireElement])
-                                    : FieldValue.arrayUnion([fireElement]);
-                                final postsUpdateData = {
-                                  'fire': fireUpdate,
-                                };
-                                await postViewerPostsRecord.reference
-                                    .update(postsUpdateData);
-                              },
-                              value: postViewerPostsRecord.fire
-                                  .toList()
-                                  .contains(currentUserReference),
-                              onIcon: Icon(
-                                Icons.local_fire_department,
-                                color: Color(0xFFFF640D),
-                                size: 40,
-                              ),
-                              offIcon: Icon(
-                                Icons.local_fire_department_rounded,
-                                color: Color(0xFFFF640D),
-                                size: 40,
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ],
