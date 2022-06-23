@@ -65,7 +65,19 @@ class _PostCreationWidgetState extends State<PostCreationWidget> {
                     obscureText: false,
                     decoration: InputDecoration(
                       labelText: 'Description',
+                      labelStyle:
+                          FlutterFlowTheme.of(context).bodyText1.override(
+                                fontFamily: 'Poppins',
+                                color: Color(0x80FFFFFF),
+                                fontWeight: FontWeight.normal,
+                              ),
                       hintText: 'Enter your text',
+                      hintStyle:
+                          FlutterFlowTheme.of(context).bodyText1.override(
+                                fontFamily: 'Poppins',
+                                color: Color(0x80FFFFFF),
+                                fontWeight: FontWeight.normal,
+                              ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: Color(0xFFFF640D),
@@ -83,7 +95,8 @@ class _PostCreationWidgetState extends State<PostCreationWidget> {
                     ),
                     style: FlutterFlowTheme.of(context).bodyText1.override(
                           fontFamily: 'Poppins',
-                          color: Color(0x80FFFFFF),
+                          color: Color(0xCDFFFFFF),
+                          fontWeight: FontWeight.normal,
                         ),
                     maxLines: 8,
                   ),

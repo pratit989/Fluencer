@@ -1,3 +1,6 @@
+import '../auth/auth_util.dart';
+import '../backend/backend.dart';
+import '../chat/chat_widget.dart';
 import '../components/chat_display_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -24,127 +27,250 @@ class _MessagesWidgetState extends State<MessagesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
-        title: Text(
-          'Messages',
-          style: FlutterFlowTheme.of(context).title1.override(
-                fontFamily: 'Poppins',
-                color: Colors.white,
-              ),
-        ),
-        actions: [],
-        centerTitle: false,
-        elevation: 0,
+    return StreamBuilder<List<ConversationRefsRecord>>(
+      stream: queryConversationRefsRecord(
+        parent: currentUserReference,
+        singleRecord: true,
       ),
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  height: MediaQuery.of(context).size.height * 0.05,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFEEEEEE),
-                    borderRadius: BorderRadius.circular(20),
+      builder: (context, snapshot) {
+        // Customize what your widget looks like when it's loading.
+        if (!snapshot.hasData) {
+          return Center(
+            child: SizedBox(
+              width: 50,
+              height: 50,
+              child: CircularProgressIndicator(
+                color: Color(0xFFFF640D),
+              ),
+            ),
+          );
+        }
+        List<ConversationRefsRecord> messagesConversationRefsRecordList =
+            snapshot.data;
+        // Return an empty Container when the document does not exist.
+        if (snapshot.data.isEmpty) {
+          return Container();
+        }
+        final messagesConversationRefsRecord =
+            messagesConversationRefsRecordList.isNotEmpty
+                ? messagesConversationRefsRecordList.first
+                : null;
+        return Scaffold(
+          key: scaffoldKey,
+          appBar: AppBar(
+            backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+            automaticallyImplyLeading: false,
+            title: Text(
+              'Messages',
+              style: FlutterFlowTheme.of(context).title1.override(
+                    fontFamily: 'Poppins',
+                    color: Colors.white,
                   ),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
-                    child: TextFormField(
-                      controller: textController,
-                      onChanged: (_) => EasyDebounce.debounce(
-                        'textController',
-                        Duration(milliseconds: 2000),
-                        () => setState(() {}),
-                      ),
-                      autofocus: true,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        hintText: 'Messages',
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1,
-                          ),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(4.0),
-                            topRight: Radius.circular(4.0),
-                          ),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1,
-                          ),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(4.0),
-                            topRight: Radius.circular(4.0),
-                          ),
-                        ),
-                        prefixIcon: Icon(
-                          Icons.search,
-                          color: Color(0xFFFF640D),
-                          size: 15,
-                        ),
-                      ),
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Poppins',
-                            color: Color(0x67101213),
-                          ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    decoration: BoxDecoration(),
-                    child: ListView(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      children: [
-                        Container(
-                          width: 50,
-                          height: 50,
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: Image.network(
-                            'https://picsum.photos/seed/861/600',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Divider(
-                  thickness: 1,
-                  color: Colors.black,
-                ),
-                ListView(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
+            ),
+            actions: [],
+            centerTitle: false,
+            elevation: 0,
+          ),
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          body: SafeArea(
+            child: GestureDetector(
+              onTap: () => FocusScope.of(context).unfocus(),
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
                   children: [
-                    ChatDisplayWidget(),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFEEEEEE),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
+                        child: TextFormField(
+                          controller: textController,
+                          onChanged: (_) => EasyDebounce.debounce(
+                            'textController',
+                            Duration(milliseconds: 2000),
+                            () => setState(() {}),
+                          ),
+                          autofocus: true,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            hintText: 'Messages',
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
+                            prefixIcon: Icon(
+                              Icons.search,
+                              color: Color(0xFFFF640D),
+                              size: 15,
+                            ),
+                          ),
+                          style:
+                              FlutterFlowTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Poppins',
+                                    color: Color(0x67101213),
+                                  ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.1,
+                        decoration: BoxDecoration(),
+                        child: Padding(
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                          child: StreamBuilder<List<UserRecord>>(
+                            stream: queryUserRecord(),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 50,
+                                    height: 50,
+                                    child: CircularProgressIndicator(
+                                      color: Color(0xFFFF640D),
+                                    ),
+                                  ),
+                                );
+                              }
+                              List<UserRecord> listViewUserRecordList = snapshot
+                                  .data
+                                  .where((u) => u.uid != currentUserUid)
+                                  .toList();
+                              return ListView.builder(
+                                padding: EdgeInsets.zero,
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: listViewUserRecordList.length,
+                                itemBuilder: (context, listViewIndex) {
+                                  final listViewUserRecord =
+                                      listViewUserRecordList[listViewIndex];
+                                  return Align(
+                                    alignment: AlignmentDirectional(0, 0),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          5, 5, 5, 5),
+                                      child: InkWell(
+                                        onTap: () async {
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => ChatWidget(
+                                                userDoc: listViewUserRecord,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        child: Container(
+                                          width: 50,
+                                          height: 50,
+                                          clipBehavior: Clip.antiAlias,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: Image.network(
+                                            valueOrDefault<String>(
+                                              listViewUserRecord.photoUrl,
+                                              'https://st3.depositphotos.com/6672868/13701/v/600/depositphotos_137014128-stock-illustration-user-profile-icon.jpg',
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    Divider(
+                      thickness: 1,
+                      color: Colors.black,
+                    ),
+                    StreamBuilder<ConversationRefsRecord>(
+                      stream: ConversationRefsRecord.getDocument(
+                          messagesConversationRefsRecord.reference),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: CircularProgressIndicator(
+                                color: Color(0xFFFF640D),
+                              ),
+                            ),
+                          );
+                        }
+                        final listViewConversationRefsRecord = snapshot.data;
+                        return ListView(
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          children: [
+                            FutureBuilder<ConversationsRecord>(
+                              future: ConversationsRecord.getDocumentOnce(
+                                  listViewConversationRefsRecord
+                                      .conversationRef),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 50,
+                                      height: 50,
+                                      child: CircularProgressIndicator(
+                                        color: Color(0xFFFF640D),
+                                      ),
+                                    ),
+                                  );
+                                }
+                                final chatDisplayConversationsRecord =
+                                    snapshot.data;
+                                return ChatDisplayWidget(
+                                  conversation: chatDisplayConversationsRecord,
+                                );
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    ),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

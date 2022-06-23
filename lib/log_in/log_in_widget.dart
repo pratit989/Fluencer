@@ -1,7 +1,11 @@
+import '../auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../main.dart';
+import '../o_t_p_verfication/o_t_p_verfication_widget.dart';
+import '../custom_code/actions/index.dart' as actions;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -15,7 +19,9 @@ class LogInWidget extends StatefulWidget {
 }
 
 class _LogInWidgetState extends State<LogInWidget> {
+  String formattedPhoneNumber;
   TextEditingController textController;
+  final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -74,80 +80,132 @@ class _LogInWidgetState extends State<LogInWidget> {
                   decoration: BoxDecoration(
                     color: Color(0x34FFFFFF),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                        child: Text(
-                          '+91',
-                          style: FlutterFlowTheme.of(context).title3.override(
-                                fontFamily: 'Poppins',
-                                color: Colors.white,
-                                fontWeight: FontWeight.w300,
-                              ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
-                        child: Container(
-                          width: 1,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFEEEEEE),
+                  child: Form(
+                    key: formKey,
+                    autovalidateMode: AutovalidateMode.disabled,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                          child: Text(
+                            '+91',
+                            style: FlutterFlowTheme.of(context).title3.override(
+                                  fontFamily: 'Poppins',
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w300,
+                                ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: TextFormField(
-                          controller: textController,
-                          onChanged: (_) => EasyDebounce.debounce(
-                            'textController',
-                            Duration(milliseconds: 2000),
-                            () => setState(() {}),
-                          ),
-                          autofocus: true,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            hintText: '0000000000',
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                          child: Container(
+                            width: 1,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFEEEEEE),
                             ),
                           ),
-                          style:
-                              FlutterFlowTheme.of(context).subtitle1.override(
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w300,
-                                  ),
                         ),
-                      ),
-                    ],
+                        Expanded(
+                          child: TextFormField(
+                            controller: textController,
+                            onChanged: (_) => EasyDebounce.debounce(
+                              'textController',
+                              Duration(milliseconds: 2000),
+                              () => setState(() {}),
+                            ),
+                            autofocus: true,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              hintText: '0000000000',
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(4.0),
+                                  topRight: Radius.circular(4.0),
+                                ),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(4.0),
+                                  topRight: Radius.circular(4.0),
+                                ),
+                              ),
+                            ),
+                            style:
+                                FlutterFlowTheme.of(context).subtitle1.override(
+                                      fontFamily: 'Poppins',
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                            keyboardType: TextInputType.phone,
+                            validator: (val) {
+                              if (val == null || val.isEmpty) {
+                                return 'Field is required';
+                              }
+                              if (val.length < 10) {
+                                return 'Requires at least 10 characters.';
+                              }
+
+                              return null;
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     FFButtonWidget(
-                      onPressed: () {
-                        print('Button pressed ...');
+                      onPressed: () async {
+                        if (formKey.currentState == null ||
+                            !formKey.currentState.validate()) {
+                          return;
+                        }
+
+                        formattedPhoneNumber =
+                            await actions.phoneNumberFormatter(
+                          textController.text,
+                        );
+                        final phoneNumberVal = formattedPhoneNumber;
+                        if (phoneNumberVal == null ||
+                            phoneNumberVal.isEmpty ||
+                            !phoneNumberVal.startsWith('+')) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                  'Phone Number is required and has to start with +.'),
+                            ),
+                          );
+                          return;
+                        }
+                        await beginPhoneAuth(
+                          context: context,
+                          phoneNumber: phoneNumberVal,
+                          onCodeSent: () async {
+                            await Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => OTPVerficationWidget(
+                                  phoneNumber: formattedPhoneNumber,
+                                ),
+                              ),
+                              (r) => false,
+                            );
+                          },
+                        );
+
+                        setState(() {});
                       },
                       text: 'Continue',
                       options: FFButtonOptions(
@@ -202,8 +260,19 @@ class _LogInWidgetState extends State<LogInWidget> {
                         color: Colors.white,
                         size: 30,
                       ),
-                      onPressed: () {
-                        print('IconButton pressed ...');
+                      onPressed: () async {
+                        final user = await signInWithGoogle(context);
+                        if (user == null) {
+                          return;
+                        }
+                        await Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                NavBarPage(initialPage: 'HomePage'),
+                          ),
+                          (r) => false,
+                        );
                       },
                     ),
                   ],

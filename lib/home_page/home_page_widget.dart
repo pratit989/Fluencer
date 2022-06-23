@@ -1,7 +1,10 @@
+import '../auth/auth_util.dart';
+import '../backend/backend.dart';
 import '../components/post_display_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../log_in/log_in_widget.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -237,6 +240,35 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     tileColor: Color(0xFFF5F5F5),
                     dense: false,
                   ),
+                  InkWell(
+                    onTap: () async {
+                      await signOut();
+                      await Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LogInWidget(),
+                        ),
+                        (r) => false,
+                      );
+                    },
+                    child: ListTile(
+                      title: Text(
+                        'Logout',
+                        style: FlutterFlowTheme.of(context).title3.override(
+                              fontFamily: 'Poppins',
+                              color: Colors.white,
+                              fontWeight: FontWeight.normal,
+                            ),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                      tileColor: Color(0xFFF5F5F5),
+                      dense: false,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -446,47 +478,119 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       Expanded(
                         child: TabBarView(
                           children: [
-                            GridView(
-                              padding: EdgeInsets.zero,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 10,
-                                childAspectRatio: 1,
-                              ),
-                              scrollDirection: Axis.vertical,
-                              children: [
-                                PostDisplayWidget(),
-                              ],
+                            StreamBuilder<List<PostsRecord>>(
+                              stream: queryPostsRecord(),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 50,
+                                      height: 50,
+                                      child: CircularProgressIndicator(
+                                        color: Color(0xFFFF640D),
+                                      ),
+                                    ),
+                                  );
+                                }
+                                List<PostsRecord> gridViewPostsRecordList =
+                                    snapshot.data;
+                                return GridView.builder(
+                                  padding: EdgeInsets.zero,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 10,
+                                    mainAxisSpacing: 10,
+                                    childAspectRatio: 1,
+                                  ),
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: gridViewPostsRecordList.length,
+                                  itemBuilder: (context, gridViewIndex) {
+                                    final gridViewPostsRecord =
+                                        gridViewPostsRecordList[gridViewIndex];
+                                    return PostDisplayWidget(
+                                      postRef: gridViewPostsRecord,
+                                    );
+                                  },
+                                );
+                              },
                             ),
-                            GridView(
-                              padding: EdgeInsets.zero,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 10,
-                                childAspectRatio: 1,
-                              ),
-                              scrollDirection: Axis.vertical,
-                              children: [
-                                PostDisplayWidget(),
-                              ],
+                            StreamBuilder<List<PostsRecord>>(
+                              stream: queryPostsRecord(),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 50,
+                                      height: 50,
+                                      child: CircularProgressIndicator(
+                                        color: Color(0xFFFF640D),
+                                      ),
+                                    ),
+                                  );
+                                }
+                                List<PostsRecord> gridViewPostsRecordList =
+                                    snapshot.data;
+                                return GridView.builder(
+                                  padding: EdgeInsets.zero,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 10,
+                                    mainAxisSpacing: 10,
+                                    childAspectRatio: 1,
+                                  ),
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: gridViewPostsRecordList.length,
+                                  itemBuilder: (context, gridViewIndex) {
+                                    final gridViewPostsRecord =
+                                        gridViewPostsRecordList[gridViewIndex];
+                                    return PostDisplayWidget(
+                                      postRef: gridViewPostsRecord,
+                                    );
+                                  },
+                                );
+                              },
                             ),
-                            GridView(
-                              padding: EdgeInsets.zero,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 10,
-                                childAspectRatio: 1,
-                              ),
-                              scrollDirection: Axis.vertical,
-                              children: [
-                                PostDisplayWidget(),
-                              ],
+                            StreamBuilder<List<PostsRecord>>(
+                              stream: queryPostsRecord(),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 50,
+                                      height: 50,
+                                      child: CircularProgressIndicator(
+                                        color: Color(0xFFFF640D),
+                                      ),
+                                    ),
+                                  );
+                                }
+                                List<PostsRecord> gridViewPostsRecordList =
+                                    snapshot.data;
+                                return GridView.builder(
+                                  padding: EdgeInsets.zero,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 10,
+                                    mainAxisSpacing: 10,
+                                    childAspectRatio: 1,
+                                  ),
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: gridViewPostsRecordList.length,
+                                  itemBuilder: (context, gridViewIndex) {
+                                    final gridViewPostsRecord =
+                                        gridViewPostsRecordList[gridViewIndex];
+                                    return PostDisplayWidget(
+                                      postRef: gridViewPostsRecord,
+                                    );
+                                  },
+                                );
+                              },
                             ),
                           ],
                         ),

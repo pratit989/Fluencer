@@ -1,3 +1,4 @@
+import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_video_player.dart';
@@ -5,7 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PostDisplayWidget extends StatefulWidget {
-  const PostDisplayWidget({Key key}) : super(key: key);
+  const PostDisplayWidget({
+    Key key,
+    this.postRef,
+  }) : super(key: key);
+
+  final PostsRecord postRef;
 
   @override
   _PostDisplayWidgetState createState() => _PostDisplayWidgetState();
@@ -16,11 +22,9 @@ class _PostDisplayWidgetState extends State<PostDisplayWidget> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Align(
-          alignment: AlignmentDirectional(0, 0),
-          child: FlutterFlowVideoPlayer(
-            path:
-                'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4',
+        if ((widget.postRef.postType) == 'video')
+          FlutterFlowVideoPlayer(
+            path: widget.postRef.postVideoUrl,
             videoType: VideoType.network,
             autoPlay: false,
             looping: true,
@@ -28,14 +32,14 @@ class _PostDisplayWidgetState extends State<PostDisplayWidget> {
             allowFullScreen: true,
             allowPlaybackSpeedMenu: false,
           ),
-        ),
-        Align(
-          alignment: AlignmentDirectional(0, 0),
-          child: Image.network(
-            'https://picsum.photos/seed/756/600',
-            fit: BoxFit.cover,
+        if ((widget.postRef.postType) == 'img')
+          Align(
+            alignment: AlignmentDirectional(0, 0),
+            child: Image.network(
+              'https://picsum.photos/seed/756/600',
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
       ],
     );
   }
