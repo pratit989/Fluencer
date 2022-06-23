@@ -58,19 +58,26 @@ class _PostViewerWidgetState extends State<PostViewerWidget> {
                   child: Stack(
                     children: [
                       if ((postViewerPostsRecord.postType) == 'video')
-                        FlutterFlowVideoPlayer(
-                          path: postViewerPostsRecord.postVideoUrl,
-                          videoType: VideoType.network,
-                          autoPlay: false,
-                          looping: true,
-                          showControls: true,
-                          allowFullScreen: true,
-                          allowPlaybackSpeedMenu: false,
+                        Align(
+                          alignment: AlignmentDirectional(0, 0),
+                          child: FlutterFlowVideoPlayer(
+                            path: postViewerPostsRecord.postVideoUrl,
+                            videoType: VideoType.network,
+                            width: MediaQuery.of(context).size.width,
+                            autoPlay: false,
+                            looping: true,
+                            showControls: true,
+                            allowFullScreen: true,
+                            allowPlaybackSpeedMenu: false,
+                          ),
                         ),
                       if ((postViewerPostsRecord.postType) == 'img')
-                        Image.network(
-                          postViewerPostsRecord.postImgUrl,
-                          fit: BoxFit.cover,
+                        Align(
+                          alignment: AlignmentDirectional(0, 0),
+                          child: Image.network(
+                            postViewerPostsRecord.postImgUrl,
+                            fit: BoxFit.fill,
+                          ),
                         ),
                       Align(
                         alignment: AlignmentDirectional(0, 1),
