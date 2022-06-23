@@ -123,8 +123,7 @@ class _PostCreationWidgetState extends State<PostCreationWidget> {
                             onPressed: () async {
                               await showModalBottomSheet(
                                 isScrollControlled: true,
-                                backgroundColor:
-                                    FlutterFlowTheme.of(context).primaryColor,
+                                backgroundColor: Colors.transparent,
                                 context: context,
                                 builder: (context) {
                                   return Padding(
