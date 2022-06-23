@@ -77,12 +77,12 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(brightness: Brightness.light),
       themeMode: _themeMode,
       home: initialUser == null || displaySplashImage
-          ? Center(
-              child: SizedBox(
-                width: 50,
-                height: 50,
-                child: CircularProgressIndicator(
-                  color: Color(0xFFFF640D),
+          ? Container(
+              color: FlutterFlowTheme.of(context).alternate,
+              child: Builder(
+                builder: (context) => Image.asset(
+                  'assets/images/WhatsApp_Image_2022-06-18_at_7.07.50_PM.jpeg',
+                  fit: BoxFit.contain,
                 ),
               ),
             )
