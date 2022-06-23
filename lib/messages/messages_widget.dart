@@ -211,8 +211,40 @@ class _MessagesWidgetState extends State<MessagesWidget> {
                       itemBuilder: (context, listViewIndex) {
                         final listViewConversationRefsRecord =
                             listViewConversationRefsRecordList[listViewIndex];
-                        return ChatDisplayWidget(
-                          conversation: listViewConversationRefsRecord,
+                        return FutureBuilder<UserRecord>(
+                          future: UserRecord.getDocumentOnce(
+                              listViewConversationRefsRecord.userRef),
+                          builder: (context, snapshot) {
+                            // Customize what your widget looks like when it's loading.
+                            if (!snapshot.hasData) {
+                              return Center(
+                                child: SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: CircularProgressIndicator(
+                                    color: Color(0xFFFF640D),
+                                  ),
+                                ),
+                              );
+                            }
+                            final chatDisplayUserRecord = snapshot.data;
+                            return InkWell(
+                              onTap: () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ChatWidget(
+                                      userDoc: chatDisplayUserRecord,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: ChatDisplayWidget(
+                                conversation: listViewConversationRefsRecord,
+                                userDoc: chatDisplayUserRecord,
+                              ),
+                            );
+                          },
                         );
                       },
                     );
