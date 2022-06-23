@@ -574,6 +574,12 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                         ),
                                     hintText: dateTimeFormat(
                                         'yMMMd', profileUserRecord.dateOfBirth),
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Poppins',
+                                          color: Colors.white,
+                                        ),
                                     enabledBorder: InputBorder.none,
                                     focusedBorder: InputBorder.none,
                                   ),
