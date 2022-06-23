@@ -1,5 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../components/all_search_users_widget.dart';
 import '../components/post_display_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -466,6 +467,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     builder: (context) {
                                       final usersDocuments =
                                           simpleSearchResults?.toList() ?? [];
+                                      if (usersDocuments.isEmpty) {
+                                        return AllSearchUsersWidget();
+                                      }
                                       return ListView.builder(
                                         padding: EdgeInsets.zero,
                                         scrollDirection: Axis.vertical,
