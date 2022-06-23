@@ -248,7 +248,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                 }
 
                                 final userUpdateData = createUserRecordData(
-                                  photoUrl: uploadedFileUrl2,
+                                  photoUrl: uploadedFileUrl1,
                                 );
                                 await currentUserReference
                                     .update(userUpdateData);
@@ -308,7 +308,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                   }
 
                                   final userUpdateData = createUserRecordData(
-                                    wallpaperUrl: uploadedFileUrl1,
+                                    wallpaperUrl: uploadedFileUrl2,
                                   );
                                   await currentUserReference
                                       .update(userUpdateData);
