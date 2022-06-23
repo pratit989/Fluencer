@@ -39,6 +39,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     phoneController = TextEditingController(text: currentPhoneNumber);
     genderController = TextEditingController(
         text: valueOrDefault(currentUserDocument?.gender, ''));
+    textController5 =
+        TextEditingController(text: dateTimeFormat('yMMMd', datePicked));
   }
 
   @override
@@ -554,11 +556,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                     MediaQuery.of(context).size.height * 0.07,
                                 decoration: BoxDecoration(),
                                 child: TextFormField(
-                                  controller: textController5 ??=
-                                      TextEditingController(
-                                    text: dateTimeFormat(
-                                        'yMMMd', profileUserRecord.dateOfBirth),
-                                  ),
+                                  controller: textController5,
                                   onChanged: (_) => EasyDebounce.debounce(
                                     'textController5',
                                     Duration(milliseconds: 2000),
@@ -574,6 +572,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                           fontFamily: 'Poppins',
                                           color: Color(0xFF4C4F62),
                                         ),
+                                    hintText: dateTimeFormat(
+                                        'yMMMd', profileUserRecord.dateOfBirth),
                                     enabledBorder: InputBorder.none,
                                     focusedBorder: InputBorder.none,
                                   ),
