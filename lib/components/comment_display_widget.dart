@@ -71,6 +71,7 @@ class _CommentDisplayWidgetState extends State<CommentDisplayWidget> {
                   style: FlutterFlowTheme.of(context).subtitle1.override(
                         fontFamily: 'Poppins',
                         color: Colors.white,
+                        fontWeight: FontWeight.normal,
                       ),
                 ),
                 AutoSizeText(
