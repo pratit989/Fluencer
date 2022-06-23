@@ -10,7 +10,7 @@ class ChatDisplayWidget extends StatefulWidget {
     this.conversation,
   }) : super(key: key);
 
-  final ConversationsRecord conversation;
+  final ConversationRefsRecord conversation;
 
   @override
   _ChatDisplayWidgetState createState() => _ChatDisplayWidgetState();
@@ -19,13 +19,9 @@ class ChatDisplayWidget extends StatefulWidget {
 class _ChatDisplayWidgetState extends State<ChatDisplayWidget> {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<MessagesRecord>>(
-      stream: queryMessagesRecord(
-        parent: widget.conversation.reference,
-        queryBuilder: (messagesRecord) =>
-            messagesRecord.orderBy('message_time'),
-        singleRecord: true,
-      ),
+    return FutureBuilder<ConversationsRecord>(
+      future: ConversationsRecord.getDocumentOnce(
+          widget.conversation.conversationRef),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -39,21 +35,13 @@ class _ChatDisplayWidgetState extends State<ChatDisplayWidget> {
             ),
           );
         }
-        List<MessagesRecord> containerMessagesRecordList = snapshot.data;
-        // Return an empty Container when the document does not exist.
-        if (snapshot.data.isEmpty) {
-          return Container();
-        }
-        final containerMessagesRecord = containerMessagesRecordList.isNotEmpty
-            ? containerMessagesRecordList.first
-            : null;
+        final containerConversationsRecord = snapshot.data;
         return Container(
           width: 100,
           height: MediaQuery.of(context).size.height * 0.1,
           decoration: BoxDecoration(),
           child: FutureBuilder<UserRecord>(
-            future:
-                UserRecord.getDocumentOnce(containerMessagesRecord.fromUserRef),
+            future: UserRecord.getDocumentOnce(widget.conversation.userRef),
             builder: (context, snapshot) {
               // Customize what your widget looks like when it's loading.
               if (!snapshot.hasData) {
@@ -108,17 +96,50 @@ class _ChatDisplayWidgetState extends State<ChatDisplayWidget> {
                                     FlutterFlowTheme.of(context).primaryBtnText,
                               ),
                         ),
-                        Text(
-                          valueOrDefault<String>(
-                            dateTimeFormat('relative',
-                                containerMessagesRecord.messageTime),
-                            'unknown',
+                        StreamBuilder<List<MessagesRecord>>(
+                          stream: queryMessagesRecord(
+                            parent: containerConversationsRecord.reference,
+                            queryBuilder: (messagesRecord) =>
+                                messagesRecord.orderBy('message_time'),
+                            singleRecord: true,
                           ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
+                          builder: (context, snapshot) {
+                            // Customize what your widget looks like when it's loading.
+                            if (!snapshot.hasData) {
+                              return Center(
+                                child: SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: CircularProgressIndicator(
+                                    color: Color(0xFFFF640D),
+                                  ),
+                                ),
+                              );
+                            }
+                            List<MessagesRecord> textMessagesRecordList =
+                                snapshot.data;
+                            // Return an empty Container when the document does not exist.
+                            if (snapshot.data.isEmpty) {
+                              return Container();
+                            }
+                            final textMessagesRecord =
+                                textMessagesRecordList.isNotEmpty
+                                    ? textMessagesRecordList.first
+                                    : null;
+                            return Text(
+                              valueOrDefault<String>(
+                                dateTimeFormat(
+                                    'relative', textMessagesRecord.messageTime),
+                                'unknown',
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
                                     fontFamily: 'Poppins',
                                     color: Color(0x67FFFFFF),
                                   ),
+                            );
+                          },
                         ),
                       ],
                     ),
