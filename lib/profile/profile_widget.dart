@@ -762,7 +762,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       unselectedLabelColor: Color(0x67FFFFFF),
                       labelStyle: FlutterFlowTheme.of(context).bodyText1,
                       indicatorColor: FlutterFlowTheme.of(context).primaryColor,
-                      indicatorWeight: 0,
+                      indicatorWeight: 1,
                       tabs: [
                         Tab(
                           icon: Icon(
