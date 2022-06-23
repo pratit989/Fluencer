@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>578765893942-s0r0j4f6ha4o78c8uf76029dlgljjj06.apps.googleusercontent.com</string>
+	<string>900534815652-57v305aoqkq739hr1gusl6hdlbj8ifb6.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.578765893942-s0r0j4f6ha4o78c8uf76029dlgljjj06</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>578765893942-4rikui7iodfkpa38ebl0nr2qkovuqe0o.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.900534815652-57v305aoqkq739hr1gusl6hdlbj8ifb6</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDS5VIvQ-bacXbIgOR7Sl7mgcHxEb_cEpA</string>
+	<string>AIzaSyD6BqT6PKIuapue07FYoCbaYKIJPxL_DAU</string>
 	<key>GCM_SENDER_ID</key>
-	<string>578765893942</string>
+	<string>900534815652</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.connectia.fluncer</string>
 	<key>PROJECT_ID</key>
-	<string>fluncer-88b1f</string>
+	<string>fluencer2-3aa9b</string>
 	<key>STORAGE_BUCKET</key>
-	<string>fluncer-88b1f.appspot.com</string>
+	<string>fluencer2-3aa9b.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:578765893942:ios:faf4ca8217e4420d4e4397</string>
+	<string>1:900534815652:ios:7c3f0fb9be1f56dafacf31</string>
 </dict>
 </plist>
