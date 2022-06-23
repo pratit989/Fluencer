@@ -352,7 +352,7 @@ class _PostViewerWidgetState extends State<PostViewerWidget> {
                                   size: 40,
                                 ),
                                 offIcon: Icon(
-                                  Icons.local_fire_department_rounded,
+                                  Icons.local_fire_department_outlined,
                                   color: Color(0xFFFF640D),
                                   size: 40,
                                 ),
