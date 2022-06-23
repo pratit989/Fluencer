@@ -138,137 +138,165 @@ class _PostViewerWidgetState extends State<PostViewerWidget> {
                                                       .primaryBtnText,
                                             ),
                                       ),
-                                      if (!((currentUserDocument?.following
-                                                      ?.toList() ??
-                                                  [])
-                                              .contains(
-                                                  rowUserRecord.reference)) ??
-                                          true)
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  5, 5, 5, 5),
-                                          child: AuthUserStreamWidget(
-                                            child: FFButtonWidget(
-                                              onPressed: () async {
-                                                if (!((currentUserDocument
+                                      if ((rowUserRecord.reference) !=
+                                          (currentUserReference))
+                                        Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            if (!((currentUserDocument
                                                             ?.following
                                                             ?.toList() ??
                                                         [])
                                                     .contains(rowUserRecord
-                                                        .reference))) {
-                                                  final userUpdateData = {
-                                                    'following':
-                                                        FieldValue.arrayUnion([
-                                                      rowUserRecord.reference
-                                                    ]),
-                                                  };
-                                                  await currentUserReference
-                                                      .update(userUpdateData);
-                                                }
-                                                if ((currentUserDocument
-                                                            ?.following
-                                                            ?.toList() ??
-                                                        [])
-                                                    .contains(rowUserRecord
-                                                        .reference)) {
-                                                  final userUpdateData = {
-                                                    'followers':
-                                                        FieldValue.arrayUnion([
-                                                      currentUserReference
-                                                    ]),
-                                                  };
-                                                  await rowUserRecord.reference
-                                                      .update(userUpdateData);
-                                                }
-                                              },
-                                              text: 'Follow',
-                                              options: FFButtonOptions(
-                                                width: 120,
-                                                height: 25,
-                                                color: Color(0xFFFF640D),
-                                                textStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .subtitle2
-                                                        .override(
-                                                          fontFamily: 'Poppins',
-                                                          color: Colors.white,
-                                                          fontSize: 14,
-                                                        ),
-                                                borderSide: BorderSide(
-                                                  color: Colors.transparent,
-                                                  width: 1,
+                                                        .reference)) ??
+                                                true)
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(5, 5, 5, 5),
+                                                child: AuthUserStreamWidget(
+                                                  child: FFButtonWidget(
+                                                    onPressed: () async {
+                                                      if (!((currentUserDocument
+                                                                  ?.following
+                                                                  ?.toList() ??
+                                                              [])
+                                                          .contains(rowUserRecord
+                                                              .reference))) {
+                                                        final userUpdateData = {
+                                                          'following':
+                                                              FieldValue
+                                                                  .arrayUnion([
+                                                            rowUserRecord
+                                                                .reference
+                                                          ]),
+                                                        };
+                                                        await currentUserReference
+                                                            .update(
+                                                                userUpdateData);
+                                                      }
+                                                      if ((currentUserDocument
+                                                                  ?.following
+                                                                  ?.toList() ??
+                                                              [])
+                                                          .contains(
+                                                              rowUserRecord
+                                                                  .reference)) {
+                                                        final userUpdateData = {
+                                                          'followers':
+                                                              FieldValue
+                                                                  .arrayUnion([
+                                                            currentUserReference
+                                                          ]),
+                                                        };
+                                                        await rowUserRecord
+                                                            .reference
+                                                            .update(
+                                                                userUpdateData);
+                                                      }
+                                                    },
+                                                    text: 'Follow',
+                                                    options: FFButtonOptions(
+                                                      width: 120,
+                                                      height: 25,
+                                                      color: Color(0xFFFF640D),
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .subtitle2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 14,
+                                                              ),
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            Colors.transparent,
+                                                        width: 1,
+                                                      ),
+                                                      borderRadius: 12,
+                                                    ),
+                                                  ),
                                                 ),
-                                                borderRadius: 12,
                                               ),
-                                            ),
-                                          ),
-                                        ),
-                                      if ((currentUserDocument?.following
-                                                      ?.toList() ??
-                                                  [])
-                                              ?.contains(
-                                                  rowUserRecord.reference) ??
-                                          true)
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  5, 5, 5, 5),
-                                          child: AuthUserStreamWidget(
-                                            child: FFButtonWidget(
-                                              onPressed: () async {
-                                                if ((currentUserDocument
-                                                            ?.following
+                                            if ((currentUserDocument?.following
                                                             ?.toList() ??
                                                         [])
-                                                    .contains(rowUserRecord
-                                                        .reference)) {
-                                                  final userUpdateData = {
-                                                    'following':
-                                                        FieldValue.arrayRemove([
-                                                      rowUserRecord.reference
-                                                    ]),
-                                                  };
-                                                  await currentUserReference
-                                                      .update(userUpdateData);
-                                                }
-                                                if (!((currentUserDocument
-                                                            ?.following
-                                                            ?.toList() ??
-                                                        [])
-                                                    .contains(rowUserRecord
-                                                        .reference))) {
-                                                  final userUpdateData = {
-                                                    'followers':
-                                                        FieldValue.arrayRemove([
-                                                      currentUserReference
-                                                    ]),
-                                                  };
-                                                  await rowUserRecord.reference
-                                                      .update(userUpdateData);
-                                                }
-                                              },
-                                              text: 'Following',
-                                              options: FFButtonOptions(
-                                                width: 120,
-                                                height: 25,
-                                                color: Color(0xFFFF640D),
-                                                textStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .subtitle2
-                                                        .override(
-                                                          fontFamily: 'Poppins',
-                                                          color: Colors.white,
-                                                          fontSize: 14,
-                                                        ),
-                                                borderSide: BorderSide(
-                                                  color: Colors.transparent,
-                                                  width: 1,
+                                                    ?.contains(rowUserRecord
+                                                        .reference) ??
+                                                true)
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(5, 5, 5, 5),
+                                                child: AuthUserStreamWidget(
+                                                  child: FFButtonWidget(
+                                                    onPressed: () async {
+                                                      if ((currentUserDocument
+                                                                  ?.following
+                                                                  ?.toList() ??
+                                                              [])
+                                                          .contains(
+                                                              rowUserRecord
+                                                                  .reference)) {
+                                                        final userUpdateData = {
+                                                          'following':
+                                                              FieldValue
+                                                                  .arrayRemove([
+                                                            rowUserRecord
+                                                                .reference
+                                                          ]),
+                                                        };
+                                                        await currentUserReference
+                                                            .update(
+                                                                userUpdateData);
+                                                      }
+                                                      if (!((currentUserDocument
+                                                                  ?.following
+                                                                  ?.toList() ??
+                                                              [])
+                                                          .contains(rowUserRecord
+                                                              .reference))) {
+                                                        final userUpdateData = {
+                                                          'followers':
+                                                              FieldValue
+                                                                  .arrayRemove([
+                                                            currentUserReference
+                                                          ]),
+                                                        };
+                                                        await rowUserRecord
+                                                            .reference
+                                                            .update(
+                                                                userUpdateData);
+                                                      }
+                                                    },
+                                                    text: 'Following',
+                                                    options: FFButtonOptions(
+                                                      width: 120,
+                                                      height: 25,
+                                                      color: Color(0xFFFF640D),
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .subtitle2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 14,
+                                                              ),
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            Colors.transparent,
+                                                        width: 1,
+                                                      ),
+                                                      borderRadius: 12,
+                                                    ),
+                                                  ),
                                                 ),
-                                                borderRadius: 12,
                                               ),
-                                            ),
-                                          ),
+                                          ],
                                         ),
                                     ],
                                   ),
