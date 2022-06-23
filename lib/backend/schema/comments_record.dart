@@ -23,6 +23,10 @@ abstract class CommentsRecord
   DocumentReference get userRef;
 
   @nullable
+  @BuiltValueField(wireName: 'post_ref')
+  DocumentReference get postRef;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
@@ -54,10 +58,12 @@ Map<String, dynamic> createCommentsRecordData({
   String text,
   DateTime commentTime,
   DocumentReference userRef,
+  DocumentReference postRef,
 }) =>
     serializers.toFirestore(
         CommentsRecord.serializer,
         CommentsRecord((c) => c
           ..text = text
           ..commentTime = commentTime
-          ..userRef = userRef));
+          ..userRef = userRef
+          ..postRef = postRef));
