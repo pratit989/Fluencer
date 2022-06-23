@@ -133,9 +133,10 @@ class _PostCreationWidgetState extends State<PostCreationWidget> {
                                     size: 60,
                                   ),
                                   onPressed: () async {
-                                    setState(() => FFAppState()
-                                            .uploadSelectionVisiblity =
-                                        FFAppState().uploadSelectionVisiblity);
+                                    setState(() =>
+                                        FFAppState().uploadSelectionVisiblity =
+                                            !(FFAppState()
+                                                .uploadSelectionVisiblity));
                                   },
                                 ),
                               ),
