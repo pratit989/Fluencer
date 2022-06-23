@@ -31,10 +31,21 @@ class _OTPTextFieldState extends State<OTPTextField> {
           color: Color.fromRGBO(30, 60, 87, 1),
           fontWeight: FontWeight.w600),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(22), color: Colors.white),
+          borderRadius: BorderRadius.circular(22), color: Colors.transparent),
     );
 
-    final focusedPinTheme = defaultPinTheme;
+    final focusedPinTheme = PinTheme(
+      width: 56,
+      height: 56,
+      textStyle: TextStyle(
+          fontSize: 20,
+          color: Color.fromRGBO(30, 60, 87, 1),
+          fontWeight: FontWeight.w600),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(22),
+          color: Colors.transparent,
+          border: Border.all(color: Colors.orange)),
+    );
 
     final submittedPinTheme = defaultPinTheme;
 

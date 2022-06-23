@@ -92,62 +92,58 @@ class _PostCreationWidgetState extends State<PostCreationWidget> {
                   decoration: BoxDecoration(),
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
-                    child: InkWell(
-                      onTap: () async {
-                        await showModalBottomSheet(
-                          isScrollControlled: true,
-                          backgroundColor: Colors.transparent,
-                          context: context,
-                          builder: (context) {
-                            return Padding(
-                              padding: MediaQuery.of(context).viewInsets,
-                              child: Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.4,
-                                child: UploadSelectionWidget(),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Align(
-                            alignment: AlignmentDirectional(0, 0),
-                            child: FlutterFlowIconButton(
-                              borderColor: Color(0xFFFF640D),
-                              borderRadius: 30,
-                              borderWidth: 1,
-                              buttonSize: 120,
-                              icon: Icon(
-                                Icons.cloud_upload,
-                                color: Color(0xFFFF640D),
-                                size: 60,
-                              ),
-                              onPressed: () {
-                                print('IconButton pressed ...');
-                              },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Align(
+                          alignment: AlignmentDirectional(0, 0),
+                          child: FlutterFlowIconButton(
+                            borderColor: Color(0xFFFF640D),
+                            borderRadius: 30,
+                            borderWidth: 1,
+                            buttonSize: 120,
+                            icon: Icon(
+                              Icons.cloud_upload,
+                              color: Color(0xFFFF640D),
+                              size: 60,
                             ),
-                          ),
-                          Align(
-                            alignment: AlignmentDirectional(0, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                              child: Text(
-                                'Upload Media',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      color: Colors.white,
+                            onPressed: () async {
+                              await showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                context: context,
+                                builder: (context) {
+                                  return Padding(
+                                    padding: MediaQuery.of(context).viewInsets,
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.3,
+                                      child: UploadSelectionWidget(),
                                     ),
-                              ),
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                        Align(
+                          alignment: AlignmentDirectional(0, 0),
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                            child: Text(
+                              'Upload Media',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.white,
+                                  ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
