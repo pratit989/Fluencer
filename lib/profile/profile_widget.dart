@@ -142,14 +142,29 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           Padding(
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
-                            child: Text(
-                              'Done',
-                              style: FlutterFlowTheme.of(context)
-                                  .subtitle2
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    color: Color(0xFFFF640D),
-                                  ),
+                            child: InkWell(
+                              onTap: () async {
+                                final userUpdateData = createUserRecordData(
+                                  email: emailController.text,
+                                  displayName: usernameController.text,
+                                  gender: genderController.text,
+                                );
+                                await currentUserReference
+                                    .update(userUpdateData);
+                                if (scaffoldKey.currentState.isDrawerOpen ||
+                                    scaffoldKey.currentState.isEndDrawerOpen) {
+                                  Navigator.pop(context);
+                                }
+                              },
+                              child: Text(
+                                'Done',
+                                style: FlutterFlowTheme.of(context)
+                                    .subtitle2
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: Color(0xFFFF640D),
+                                    ),
+                              ),
                             ),
                           ),
                         ],
@@ -446,6 +461,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                 Duration(milliseconds: 2000),
                                 () => setState(() {}),
                               ),
+                              readOnly: true,
                               obscureText: false,
                               decoration: InputDecoration(
                                 labelText: 'Phone',
