@@ -385,6 +385,47 @@ class _PostViewerWidgetState extends State<PostViewerWidget> {
                                   size: 40,
                                 ),
                               ),
+                              FlutterFlowIconButton(
+                                borderColor: Colors.transparent,
+                                borderRadius: 30,
+                                borderWidth: 1,
+                                buttonSize: 60,
+                                icon: Icon(
+                                  Icons.delete,
+                                  color: Color(0xFFFF0000),
+                                  size: 30,
+                                ),
+                                onPressed: () async {
+                                  var confirmDialogResponse = await showDialog<
+                                          bool>(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            title: Text('Confirm to delete'),
+                                            content: Text(
+                                                'Are you sure you want to delete this post?'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext, false),
+                                                child: Text('Cancel'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext, true),
+                                                child: Text('Confirm'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ) ??
+                                      false;
+                                  if (confirmDialogResponse) {
+                                    await widget.postRef.delete();
+                                    Navigator.pop(context);
+                                  }
+                                },
+                              ),
                             ],
                           ),
                         ),
