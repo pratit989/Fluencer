@@ -39,8 +39,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     phoneController = TextEditingController(text: currentPhoneNumber);
     genderController = TextEditingController(
         text: valueOrDefault(currentUserDocument?.gender, ''));
-    textController5 = TextEditingController(
-        text: dateTimeFormat('yMMMd', currentUserDocument?.dateOfBirth));
   }
 
   @override
@@ -555,35 +553,37 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                 height:
                                     MediaQuery.of(context).size.height * 0.07,
                                 decoration: BoxDecoration(),
-                                child: AuthUserStreamWidget(
-                                  child: TextFormField(
-                                    controller: textController5,
-                                    onChanged: (_) => EasyDebounce.debounce(
-                                      'textController5',
-                                      Duration(milliseconds: 2000),
-                                      () => setState(() {}),
-                                    ),
-                                    readOnly: true,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelText: 'Date of Birth',
-                                      labelStyle: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Poppins',
-                                            color: Color(0xFF4C4F62),
-                                          ),
-                                      enabledBorder: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
+                                child: TextFormField(
+                                  controller: textController5 ??=
+                                      TextEditingController(
+                                    text: dateTimeFormat(
+                                        'yMMMd', profileUserRecord.dateOfBirth),
+                                  ),
+                                  onChanged: (_) => EasyDebounce.debounce(
+                                    'textController5',
+                                    Duration(milliseconds: 2000),
+                                    () => setState(() {}),
+                                  ),
+                                  readOnly: true,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: 'Date of Birth',
+                                    labelStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
                                           fontFamily: 'Poppins',
-                                          color: Colors.white,
+                                          color: Color(0xFF4C4F62),
                                         ),
-                                    keyboardType: TextInputType.datetime,
+                                    enabledBorder: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
                                   ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        color: Colors.white,
+                                      ),
+                                  keyboardType: TextInputType.datetime,
                                 ),
                               ),
                               FFButtonWidget(
