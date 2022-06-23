@@ -185,93 +185,67 @@ class _MessagesWidgetState extends State<MessagesWidget> {
                   color: Colors.black,
                 ),
                 Expanded(
-                  child: StreamBuilder<List<ConversationRefsRecord>>(
-                    stream: queryConversationRefsRecord(
-                      parent: currentUserReference,
-                      singleRecord: true,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).primaryColor,
                     ),
-                    builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
-                      if (!snapshot.hasData) {
-                        return Center(
-                          child: SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: CircularProgressIndicator(
-                              color: Color(0xFFFF640D),
+                    child: StreamBuilder<List<ConversationRefsRecord>>(
+                      stream: queryConversationRefsRecord(
+                        parent: currentUserReference,
+                      ),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: CircularProgressIndicator(
+                                color: Color(0xFFFF640D),
+                              ),
                             ),
-                          ),
-                        );
-                      }
-                      List<ConversationRefsRecord>
-                          containerConversationRefsRecordList = snapshot.data;
-                      // Return an empty Container when the document does not exist.
-                      if (snapshot.data.isEmpty) {
-                        return Container();
-                      }
-                      final containerConversationRefsRecord =
-                          containerConversationRefsRecordList.isNotEmpty
-                              ? containerConversationRefsRecordList.first
-                              : null;
-                      return Container(
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                        ),
-                        child: StreamBuilder<ConversationRefsRecord>(
-                          stream: ConversationRefsRecord.getDocument(
-                              containerConversationRefsRecord.reference),
-                          builder: (context, snapshot) {
-                            // Customize what your widget looks like when it's loading.
-                            if (!snapshot.hasData) {
-                              return Center(
-                                child: SizedBox(
-                                  width: 50,
-                                  height: 50,
-                                  child: CircularProgressIndicator(
-                                    color: Color(0xFFFF640D),
-                                  ),
-                                ),
-                              );
-                            }
+                          );
+                        }
+                        List<ConversationRefsRecord>
+                            listViewConversationRefsRecordList = snapshot.data;
+                        return ListView.builder(
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemCount: listViewConversationRefsRecordList.length,
+                          itemBuilder: (context, listViewIndex) {
                             final listViewConversationRefsRecord =
-                                snapshot.data;
-                            return ListView(
-                              padding: EdgeInsets.zero,
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              children: [
-                                FutureBuilder<ConversationsRecord>(
-                                  future: ConversationsRecord.getDocumentOnce(
-                                      listViewConversationRefsRecord
-                                          .conversationRef),
-                                  builder: (context, snapshot) {
-                                    // Customize what your widget looks like when it's loading.
-                                    if (!snapshot.hasData) {
-                                      return Center(
-                                        child: SizedBox(
-                                          width: 50,
-                                          height: 50,
-                                          child: CircularProgressIndicator(
-                                            color: Color(0xFFFF640D),
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                    final chatDisplayConversationsRecord =
-                                        snapshot.data;
-                                    return ChatDisplayWidget(
-                                      conversation:
-                                          chatDisplayConversationsRecord,
-                                    );
-                                  },
-                                ),
-                              ],
+                                listViewConversationRefsRecordList[
+                                    listViewIndex];
+                            return FutureBuilder<ConversationsRecord>(
+                              future: ConversationsRecord.getDocumentOnce(
+                                  listViewConversationRefsRecord
+                                      .conversationRef),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 50,
+                                      height: 50,
+                                      child: CircularProgressIndicator(
+                                        color: Color(0xFFFF640D),
+                                      ),
+                                    ),
+                                  );
+                                }
+                                final chatDisplayConversationsRecord =
+                                    snapshot.data;
+                                return ChatDisplayWidget(
+                                  conversation: chatDisplayConversationsRecord,
+                                );
+                              },
                             );
                           },
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                 ),
               ],
