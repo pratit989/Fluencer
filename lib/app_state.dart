@@ -19,6 +19,10 @@ class FFAppState {
   SharedPreferences prefs;
 
   String OTP = '';
+
+  String currentPostUpload;
+
+  String currentPostVideoUpload;
 }
 
 LatLng _latLngFromString(String val) {
