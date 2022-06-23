@@ -502,68 +502,85 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                   ),
                         ),
                       ),
-                      AuthUserStreamWidget(
-                        child: TextFormField(
-                          controller: textController5,
-                          onChanged: (_) => EasyDebounce.debounce(
-                            'textController5',
-                            Duration(milliseconds: 2000),
-                            () => setState(() {}),
-                          ),
-                          onFieldSubmitted: (_) async {
-                            // pickDateOfBirth
-                            await DatePicker.showDatePicker(
-                              context,
-                              showTitleActions: true,
-                              onConfirm: (date) {
-                                setState(() => datePicked = date);
-                              },
-                              currentTime: getCurrentTimestamp,
-                              minTime: DateTime(0, 0, 0),
-                            );
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.6,
+                            height: MediaQuery.of(context).size.height * 0.07,
+                            decoration: BoxDecoration(),
+                            child: AuthUserStreamWidget(
+                              child: TextFormField(
+                                controller: textController5,
+                                onChanged: (_) => EasyDebounce.debounce(
+                                  'textController5',
+                                  Duration(milliseconds: 2000),
+                                  () => setState(() {}),
+                                ),
+                                onFieldSubmitted: (_) async {
+                                  // pickDateOfBirth
+                                  await DatePicker.showDatePicker(
+                                    context,
+                                    showTitleActions: true,
+                                    onConfirm: (date) {
+                                      setState(() => datePicked = date);
+                                    },
+                                    currentTime: getCurrentTimestamp,
+                                    minTime: DateTime(0, 0, 0),
+                                  );
 
-                            final userUpdateData = createUserRecordData(
-                              dateOfBirth: datePicked,
-                            );
-                            await currentUserReference.update(userUpdateData);
-                          },
-                          readOnly: true,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            labelText: 'Date of Birth',
-                            labelStyle:
-                                FlutterFlowTheme.of(context).bodyText1.override(
+                                  final userUpdateData = createUserRecordData(
+                                    dateOfBirth: datePicked,
+                                  );
+                                  await currentUserReference
+                                      .update(userUpdateData);
+                                },
+                                readOnly: true,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  labelText: 'Date of Birth',
+                                  labelStyle: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        color: Color(0xFF4C4F62),
+                                      ),
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
                                       fontFamily: 'Poppins',
-                                      color: Color(0xFF4C4F62),
+                                      color: Colors.white,
                                     ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.black,
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.black,
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
+                                keyboardType: TextInputType.datetime,
                               ),
                             ),
                           ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
+                          FFButtonWidget(
+                            onPressed: () {
+                              print('Button pressed ...');
+                            },
+                            text: 'Set Date',
+                            options: FFButtonOptions(
+                              width: 120,
+                              height: 30,
+                              color: Color(0xFFFF640D),
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .subtitle2
+                                  .override(
                                     fontFamily: 'Poppins',
                                     color: Colors.white,
                                   ),
-                          keyboardType: TextInputType.datetime,
-                        ),
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                                width: 1,
+                              ),
+                              borderRadius: 12,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
