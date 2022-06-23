@@ -509,7 +509,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     crossAxisCount: 2,
                                     crossAxisSpacing: 10,
                                     mainAxisSpacing: 10,
-                                    childAspectRatio: 1,
+                                    childAspectRatio: 0.6,
                                   ),
                                   scrollDirection: Axis.vertical,
                                   itemCount: gridViewPostsRecordList.length,
