@@ -13,13 +13,69 @@ class UploadSelectionWidget extends StatefulWidget {
 }
 
 class _UploadSelectionWidgetState extends State<UploadSelectionWidget> {
-  String uploadedFileUrl = '';
+  String uploadedFileUrl1 = '';
+  String uploadedFileUrl2 = '';
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
+        Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+          child: InkWell(
+            onTap: () async {
+              final selectedMedia = await selectMediaWithSourceBottomSheet(
+                context: context,
+                allowPhoto: false,
+                allowVideo: true,
+              );
+              if (selectedMedia != null &&
+                  selectedMedia.every(
+                      (m) => validateFileFormat(m.storagePath, context))) {
+                showUploadMessage(
+                  context,
+                  'Uploading file...',
+                  showLoading: true,
+                );
+                final downloadUrls = (await Future.wait(selectedMedia.map(
+                        (m) async => await uploadData(m.storagePath, m.bytes))))
+                    .where((u) => u != null)
+                    .toList();
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                if (downloadUrls != null &&
+                    downloadUrls.length == selectedMedia.length) {
+                  setState(() => uploadedFileUrl1 = downloadUrls.first);
+                  showUploadMessage(
+                    context,
+                    'Success!',
+                  );
+                } else {
+                  showUploadMessage(
+                    context,
+                    'Failed to upload media',
+                  );
+                  return;
+                }
+              }
+            },
+            child: ListTile(
+              title: Text(
+                'Upload a new Video',
+                style: FlutterFlowTheme.of(context).title3.override(
+                      fontFamily: 'Poppins',
+                      color: Color(0x7FFFFFFF),
+                    ),
+              ),
+              trailing: Icon(
+                Icons.arrow_forward_ios,
+                color: Color(0xFFFF640D),
+                size: 20,
+              ),
+              dense: false,
+            ),
+          ),
+        ),
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
           child: InkWell(
@@ -45,7 +101,7 @@ class _UploadSelectionWidgetState extends State<UploadSelectionWidget> {
                 ScaffoldMessenger.of(context).hideCurrentSnackBar();
                 if (downloadUrls != null &&
                     downloadUrls.length == selectedMedia.length) {
-                  setState(() => uploadedFileUrl = downloadUrls.first);
+                  setState(() => uploadedFileUrl2 = downloadUrls.first);
                   showUploadMessage(
                     context,
                     'Success!',
@@ -74,24 +130,6 @@ class _UploadSelectionWidgetState extends State<UploadSelectionWidget> {
               ),
               dense: false,
             ),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-          child: ListTile(
-            title: Text(
-              'Upload new Text',
-              style: FlutterFlowTheme.of(context).title3.override(
-                    fontFamily: 'Poppins',
-                    color: Color(0x7FFFFFFF),
-                  ),
-            ),
-            trailing: Icon(
-              Icons.arrow_forward_ios,
-              color: Color(0xFFFF640D),
-              size: 20,
-            ),
-            dense: false,
           ),
         ),
       ],
