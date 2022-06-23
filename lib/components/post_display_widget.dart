@@ -26,10 +26,10 @@ class _PostDisplayWidgetState extends State<PostDisplayWidget> {
           FlutterFlowVideoPlayer(
             path: widget.postRef.postVideoUrl,
             videoType: VideoType.network,
-            autoPlay: false,
+            autoPlay: true,
             looping: true,
-            showControls: true,
-            allowFullScreen: true,
+            showControls: false,
+            allowFullScreen: false,
             allowPlaybackSpeedMenu: false,
           ),
         if ((widget.postRef.postType) == 'img')

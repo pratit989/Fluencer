@@ -59,8 +59,8 @@ class _PostViewerWidgetState extends State<PostViewerWidget> {
                 color: Colors.white,
                 size: 30,
               ),
-              onPressed: () {
-                print('IconButton pressed ...');
+              onPressed: () async {
+                Navigator.pop(context);
               },
             ),
             actions: [],
