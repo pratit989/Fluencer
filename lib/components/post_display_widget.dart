@@ -36,7 +36,7 @@ class _PostDisplayWidgetState extends State<PostDisplayWidget> {
           Align(
             alignment: AlignmentDirectional(0, 0),
             child: Image.network(
-              'https://picsum.photos/seed/756/600',
+              widget.postRef.postImgUrl,
               fit: BoxFit.cover,
             ),
           ),
