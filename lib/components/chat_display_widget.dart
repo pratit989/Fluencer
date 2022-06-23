@@ -82,8 +82,8 @@ class _ChatDisplayWidgetState extends State<ChatDisplayWidget> {
                     StreamBuilder<List<MessagesRecord>>(
                       stream: queryMessagesRecord(
                         parent: containerConversationsRecord.reference,
-                        queryBuilder: (messagesRecord) =>
-                            messagesRecord.orderBy('message_time'),
+                        queryBuilder: (messagesRecord) => messagesRecord
+                            .orderBy('message_time', descending: true),
                         singleRecord: true,
                       ),
                       builder: (context, snapshot) {
