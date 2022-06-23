@@ -630,31 +630,35 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   10, 10, 10, 10),
-                              child: FFButtonWidget(
-                                onPressed: () {
-                                  print('Button pressed ...');
-                                },
-                                text: '2222',
-                                icon: Icon(
-                                  Icons.local_fire_department_rounded,
-                                  size: 15,
-                                ),
-                                options: FFButtonOptions(
-                                  width: 130,
-                                  height: 40,
-                                  color: Color(0xFFFF640D),
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle2
-                                      .override(
-                                        fontFamily: 'Poppins',
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                              child: AuthUserStreamWidget(
+                                child: FFButtonWidget(
+                                  onPressed: () {
+                                    print('Button pressed ...');
+                                  },
+                                  text: valueOrDefault(
+                                          currentUserDocument?.totalFire, 0)
+                                      .toString(),
+                                  icon: Icon(
+                                    Icons.local_fire_department_rounded,
+                                    size: 15,
                                   ),
-                                  borderRadius: 12,
+                                  options: FFButtonOptions(
+                                    width: 130,
+                                    height: 40,
+                                    color: Color(0xFFFF640D),
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .subtitle2
+                                        .override(
+                                          fontFamily: 'Poppins',
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                      width: 1,
+                                    ),
+                                    borderRadius: 12,
+                                  ),
                                 ),
                               ),
                             ),
