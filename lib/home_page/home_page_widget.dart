@@ -5,6 +5,7 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../log_in/log_in_widget.dart';
+import '../post_viewer/post_viewer_widget.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -516,8 +517,22 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   itemBuilder: (context, gridViewIndex) {
                                     final gridViewPostsRecord =
                                         gridViewPostsRecordList[gridViewIndex];
-                                    return PostDisplayWidget(
-                                      postRef: gridViewPostsRecord,
+                                    return InkWell(
+                                      onTap: () async {
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                PostViewerWidget(
+                                              postRef:
+                                                  gridViewPostsRecord.reference,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: PostDisplayWidget(
+                                        postRef: gridViewPostsRecord,
+                                      ),
                                     );
                                   },
                                 );
@@ -547,15 +562,29 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     crossAxisCount: 2,
                                     crossAxisSpacing: 10,
                                     mainAxisSpacing: 10,
-                                    childAspectRatio: 1,
+                                    childAspectRatio: 0.6,
                                   ),
                                   scrollDirection: Axis.vertical,
                                   itemCount: gridViewPostsRecordList.length,
                                   itemBuilder: (context, gridViewIndex) {
                                     final gridViewPostsRecord =
                                         gridViewPostsRecordList[gridViewIndex];
-                                    return PostDisplayWidget(
-                                      postRef: gridViewPostsRecord,
+                                    return InkWell(
+                                      onTap: () async {
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                PostViewerWidget(
+                                              postRef:
+                                                  gridViewPostsRecord.reference,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: PostDisplayWidget(
+                                        postRef: gridViewPostsRecord,
+                                      ),
                                     );
                                   },
                                 );
@@ -585,15 +614,29 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     crossAxisCount: 2,
                                     crossAxisSpacing: 10,
                                     mainAxisSpacing: 10,
-                                    childAspectRatio: 1,
+                                    childAspectRatio: 0.6,
                                   ),
                                   scrollDirection: Axis.vertical,
                                   itemCount: gridViewPostsRecordList.length,
                                   itemBuilder: (context, gridViewIndex) {
                                     final gridViewPostsRecord =
                                         gridViewPostsRecordList[gridViewIndex];
-                                    return PostDisplayWidget(
-                                      postRef: gridViewPostsRecord,
+                                    return InkWell(
+                                      onTap: () async {
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                PostViewerWidget(
+                                              postRef:
+                                                  gridViewPostsRecord.reference,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: PostDisplayWidget(
+                                        postRef: gridViewPostsRecord,
+                                      ),
                                     );
                                   },
                                 );

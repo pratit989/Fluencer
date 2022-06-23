@@ -7,6 +7,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
+import '../post_viewer/post_viewer_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -922,7 +923,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                         crossAxisCount: 2,
                                         crossAxisSpacing: 10,
                                         mainAxisSpacing: 10,
-                                        childAspectRatio: 1,
+                                        childAspectRatio: 0.6,
                                       ),
                                       scrollDirection: Axis.vertical,
                                       itemCount: gridViewPostsRecordList.length,
@@ -930,8 +931,22 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                         final gridViewPostsRecord =
                                             gridViewPostsRecordList[
                                                 gridViewIndex];
-                                        return PostDisplayWidget(
-                                          postRef: gridViewPostsRecord,
+                                        return InkWell(
+                                          onTap: () async {
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    PostViewerWidget(
+                                                  postRef: gridViewPostsRecord
+                                                      .reference,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          child: PostDisplayWidget(
+                                            postRef: gridViewPostsRecord,
+                                          ),
                                         );
                                       },
                                     );
@@ -965,7 +980,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                         crossAxisCount: 2,
                                         crossAxisSpacing: 10,
                                         mainAxisSpacing: 10,
-                                        childAspectRatio: 1,
+                                        childAspectRatio: 0.6,
                                       ),
                                       scrollDirection: Axis.vertical,
                                       itemCount: gridViewPostsRecordList.length,
@@ -973,8 +988,22 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                         final gridViewPostsRecord =
                                             gridViewPostsRecordList[
                                                 gridViewIndex];
-                                        return PostDisplayWidget(
-                                          postRef: gridViewPostsRecord,
+                                        return InkWell(
+                                          onTap: () async {
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    PostViewerWidget(
+                                                  postRef: gridViewPostsRecord
+                                                      .reference,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          child: PostDisplayWidget(
+                                            postRef: gridViewPostsRecord,
+                                          ),
                                         );
                                       },
                                     );
@@ -1008,7 +1037,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                         crossAxisCount: 2,
                                         crossAxisSpacing: 10,
                                         mainAxisSpacing: 10,
-                                        childAspectRatio: 1,
+                                        childAspectRatio: 0.6,
                                       ),
                                       scrollDirection: Axis.vertical,
                                       itemCount: gridViewPostsRecordList.length,
@@ -1016,8 +1045,22 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                         final gridViewPostsRecord =
                                             gridViewPostsRecordList[
                                                 gridViewIndex];
-                                        return PostDisplayWidget(
-                                          postRef: gridViewPostsRecord,
+                                        return InkWell(
+                                          onTap: () async {
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    PostViewerWidget(
+                                                  postRef: gridViewPostsRecord
+                                                      .reference,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          child: PostDisplayWidget(
+                                            postRef: gridViewPostsRecord,
+                                          ),
                                         );
                                       },
                                     );
