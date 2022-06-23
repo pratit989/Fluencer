@@ -773,15 +773,36 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                '0',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryBtnText,
-                                    ),
+                              StreamBuilder<List<PostsRecord>>(
+                                stream: queryPostsRecord(
+                                  parent: currentUserReference,
+                                ),
+                                builder: (context, snapshot) {
+                                  // Customize what your widget looks like when it's loading.
+                                  if (!snapshot.hasData) {
+                                    return Center(
+                                      child: SizedBox(
+                                        width: 50,
+                                        height: 50,
+                                        child: CircularProgressIndicator(
+                                          color: Color(0xFFFF640D),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                  List<PostsRecord> textPostsRecordList =
+                                      snapshot.data;
+                                  return Text(
+                                    textPostsRecordList.length.toString(),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Poppins',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryBtnText,
+                                        ),
+                                  );
+                                },
                               ),
                               Text(
                                 'Posts',
@@ -804,7 +825,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                '0',
+                                profileUserRecord.following
+                                    .toList()
+                                    .length
+                                    .toString(),
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText1
                                     .override(
@@ -834,7 +858,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                '0',
+                                profileUserRecord.followers
+                                    .toList()
+                                    .length
+                                    .toString(),
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText1
                                     .override(
