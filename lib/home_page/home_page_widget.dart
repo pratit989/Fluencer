@@ -5,10 +5,14 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../log_in/log_in_widget.dart';
+import '../main.dart';
 import '../post_viewer/post_viewer_widget.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:text_search/text_search.dart';
 
 class HomePageWidget extends StatefulWidget {
   const HomePageWidget({Key key}) : super(key: key);
@@ -18,6 +22,7 @@ class HomePageWidget extends StatefulWidget {
 }
 
 class _HomePageWidgetState extends State<HomePageWidget> {
+  List<UserRecord> simpleSearchResults = [];
   TextEditingController textController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -125,22 +130,33 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           fontWeight: FontWeight.normal,
                         ),
                   ),
-                  ListTile(
-                    title: Text(
-                      'Push Notification',
-                      style: FlutterFlowTheme.of(context).title3.override(
-                            fontFamily: 'Poppins',
-                            color: Colors.white,
-                            fontWeight: FontWeight.normal,
-                          ),
+                  InkWell(
+                    onTap: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              NavBarPage(initialPage: 'Notifications'),
+                        ),
+                      );
+                    },
+                    child: ListTile(
+                      title: Text(
+                        'Push Notification',
+                        style: FlutterFlowTheme.of(context).title3.override(
+                              fontFamily: 'Poppins',
+                              color: Colors.white,
+                              fontWeight: FontWeight.normal,
+                            ),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                      tileColor: Color(0xFFF5F5F5),
+                      dense: false,
                     ),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                    tileColor: Color(0xFFF5F5F5),
-                    dense: false,
                   ),
                   ListTile(
                     title: Text(
@@ -312,59 +328,110 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       }
                     },
                   ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.05,
-                      decoration: BoxDecoration(
-                        color: Color(0x1AFFFFFF),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: TextFormField(
-                        controller: textController,
-                        onChanged: (_) => EasyDebounce.debounce(
-                          'textController',
-                          Duration(milliseconds: 2000),
-                          () => setState(() {}),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          height: MediaQuery.of(context).size.height * 0.05,
+                          decoration: BoxDecoration(
+                            color: Color(0x1AFFFFFF),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: TextFormField(
+                            controller: textController,
+                            onChanged: (_) => EasyDebounce.debounce(
+                              'textController',
+                              Duration(milliseconds: 2000),
+                              () => setState(() {}),
+                            ),
+                            onFieldSubmitted: (_) async {
+                              await queryUserRecordOnce()
+                                  .then(
+                                    (records) => simpleSearchResults =
+                                        TextSearch(
+                                      records
+                                          .map(
+                                            (record) => TextSearchItem(record, [
+                                              record.email,
+                                              record.displayName,
+                                              record.phoneNumber
+                                            ]),
+                                          )
+                                          .toList(),
+                                    )
+                                            .search(textController.text)
+                                            .map((r) => r.object)
+                                            .toList(),
+                                  )
+                                  .onError((_, __) => simpleSearchResults = [])
+                                  .whenComplete(() => setState(() {}));
+                            },
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              hintText: 'Search',
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(4.0),
+                                  topRight: Radius.circular(4.0),
+                                ),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(4.0),
+                                  topRight: Radius.circular(4.0),
+                                ),
+                              ),
+                              contentPadding:
+                                  EdgeInsetsDirectional.fromSTEB(20, 0, 0, 15),
+                              suffixIcon: textController.text.isNotEmpty
+                                  ? InkWell(
+                                      onTap: () => setState(
+                                        () => textController?.clear(),
+                                      ),
+                                      child: Icon(
+                                        Icons.clear,
+                                        color: Color(0xFF757575),
+                                        size: 22,
+                                      ),
+                                    )
+                                  : null,
+                            ),
+                            style:
+                                FlutterFlowTheme.of(context).bodyText1.override(
+                                      fontFamily: 'Poppins',
+                                      color: Color(0x34FFFFFF),
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                          ),
                         ),
-                        autofocus: true,
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          hintText: 'Search',
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1,
-                            ),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(4.0),
-                              topRight: Radius.circular(4.0),
-                            ),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1,
-                            ),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(4.0),
-                              topRight: Radius.circular(4.0),
-                            ),
-                          ),
-                          prefixIcon: Icon(
-                            Icons.search,
-                            color: Colors.white,
-                            size: 15,
-                          ),
-                        ),
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: 'Poppins',
-                              color: Color(0x34FFFFFF),
-                              fontWeight: FontWeight.normal,
-                            ),
                       ),
-                    ),
+                      FlutterFlowIconButton(
+                        borderColor: Colors.transparent,
+                        borderRadius: 10,
+                        borderWidth: 1,
+                        buttonSize: 40,
+                        fillColor: Color(0x33FFFFFF),
+                        icon: Icon(
+                          Icons.search,
+                          color: Color(0xFFFF640D),
+                          size: 20,
+                        ),
+                        onPressed: () {
+                          print('IconButton pressed ...');
+                        },
+                      ),
+                    ],
                   ),
                   Expanded(
                     child: Padding(
@@ -395,40 +462,70 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             Expanded(
                               child: TabBarView(
                                 children: [
-                                  Align(
-                                    alignment: AlignmentDirectional(0, -1),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          5, 0, 5, 0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            'Recent Search',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText1
-                                                .override(
-                                                  fontFamily: 'Poppins',
-                                                  color: Colors.white,
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
-                                          ),
-                                          Text(
-                                            'Clear all',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText1
-                                                .override(
-                                                  fontFamily: 'Poppins',
+                                  Builder(
+                                    builder: (context) {
+                                      final usersDocuments =
+                                          simpleSearchResults?.toList() ?? [];
+                                      return ListView.builder(
+                                        padding: EdgeInsets.zero,
+                                        scrollDirection: Axis.vertical,
+                                        itemCount: usersDocuments.length,
+                                        itemBuilder:
+                                            (context, usersDocumentsIndex) {
+                                          final usersDocumentsItem =
+                                              usersDocuments[
+                                                  usersDocumentsIndex];
+                                          return Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    10, 10, 10, 10),
+                                            child: Slidable(
+                                              actionPane:
+                                                  const SlidableScrollActionPane(),
+                                              secondaryActions: [
+                                                IconSlideAction(
+                                                  caption: 'Follow',
                                                   color: Color(0xFFFF640D),
-                                                  fontWeight: FontWeight.normal,
+                                                  icon:
+                                                      FontAwesomeIcons.userPlus,
+                                                  onTap: () {
+                                                    print(
+                                                        'SlidableActionWidget pressed ...');
+                                                  },
                                                 ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                              ],
+                                              child: ListTile(
+                                                title: Text(
+                                                  usersDocumentsItem
+                                                      .displayName,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .title3
+                                                      .override(
+                                                        fontFamily: 'Poppins',
+                                                        color: Colors.white,
+                                                      ),
+                                                ),
+                                                subtitle: Text(
+                                                  usersDocumentsItem
+                                                      .phoneNumber,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .subtitle2
+                                                      .override(
+                                                        fontFamily: 'Poppins',
+                                                        color:
+                                                            Color(0x99FFFFFF),
+                                                      ),
+                                                ),
+                                                tileColor: Color(0xFFF5F5F5),
+                                                dense: false,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
                                   ),
                                   Text(
                                     'Tab View 2',
