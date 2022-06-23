@@ -223,6 +223,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                 final selectedMedia =
                                     await selectMediaWithSourceBottomSheet(
                                   context: context,
+                                  imageQuality: 50,
                                   allowPhoto: true,
                                   backgroundColor:
                                       FlutterFlowTheme.of(context).primaryColor,
@@ -282,6 +283,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                   final selectedMedia =
                                       await selectMediaWithSourceBottomSheet(
                                     context: context,
+                                    imageQuality: 50,
                                     allowPhoto: true,
                                     backgroundColor:
                                         FlutterFlowTheme.of(context)

@@ -334,6 +334,7 @@ class _PostCreationWidgetState extends State<PostCreationWidget> {
                               final selectedMedia =
                                   await selectMediaWithSourceBottomSheet(
                                 context: context,
+                                imageQuality: 50,
                                 allowPhoto: true,
                                 backgroundColor:
                                     FlutterFlowTheme.of(context).primaryColor,
