@@ -273,6 +273,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                               messageTime: getCurrentTimestamp,
                               messageText: textController.text,
                               messageType: 'text',
+                              fromUserRef: currentUserReference,
                             );
                             var messagesRecordReference =
                                 MessagesRecord.createDoc(
