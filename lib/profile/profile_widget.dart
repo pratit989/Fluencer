@@ -67,8 +67,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               color: Color(0xFFFF640D),
               size: 30,
             ),
-            onPressed: () {
-              print('IconButton pressed ...');
+            onPressed: () async {
+              scaffoldKey.currentState.openEndDrawer();
             },
           ),
         ],
