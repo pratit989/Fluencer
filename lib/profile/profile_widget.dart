@@ -646,8 +646,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           color: FlutterFlowTheme.of(context).primaryBtnText,
                           size: 15,
                         ),
-                        onPressed: () {
-                          print('IconButton pressed ...');
+                        onPressed: () async {
+                          scaffoldKey.currentState.openEndDrawer();
                         },
                       ),
                     ),
