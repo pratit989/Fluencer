@@ -517,24 +517,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                   Duration(milliseconds: 2000),
                                   () => setState(() {}),
                                 ),
-                                onFieldSubmitted: (_) async {
-                                  // pickDateOfBirth
-                                  await DatePicker.showDatePicker(
-                                    context,
-                                    showTitleActions: true,
-                                    onConfirm: (date) {
-                                      setState(() => datePicked = date);
-                                    },
-                                    currentTime: getCurrentTimestamp,
-                                    minTime: DateTime(0, 0, 0),
-                                  );
-
-                                  final userUpdateData = createUserRecordData(
-                                    dateOfBirth: datePicked,
-                                  );
-                                  await currentUserReference
-                                      .update(userUpdateData);
-                                },
                                 readOnly: true,
                                 obscureText: false,
                                 decoration: InputDecoration(
@@ -559,8 +541,22 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             ),
                           ),
                           FFButtonWidget(
-                            onPressed: () {
-                              print('Button pressed ...');
+                            onPressed: () async {
+                              // pickDateOfBirth
+                              await DatePicker.showDatePicker(
+                                context,
+                                showTitleActions: true,
+                                onConfirm: (date) {
+                                  setState(() => datePicked = date);
+                                },
+                                currentTime: getCurrentTimestamp,
+                                minTime: DateTime(0, 0, 0),
+                              );
+
+                              final userUpdateData = createUserRecordData(
+                                dateOfBirth: datePicked,
+                              );
+                              await currentUserReference.update(userUpdateData);
                             },
                             text: 'Set Date',
                             options: FFButtonOptions(
