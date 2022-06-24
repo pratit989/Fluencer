@@ -8,6 +8,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
 import '../post_viewer/post_viewer_widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -657,8 +658,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                     child: Stack(
                       children: [
                         AuthUserStreamWidget(
-                          child: Image.network(
-                            valueOrDefault<String>(
+                          child: CachedNetworkImage(
+                            imageUrl: valueOrDefault<String>(
                               valueOrDefault(
                                   currentUserDocument?.wallpaperUrl, ''),
                               'https://sanoobsidiq.com/wp-content/themes/divergent/images/placeholder.jpg',
@@ -692,8 +693,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                           decoration: BoxDecoration(
                                             shape: BoxShape.circle,
                                           ),
-                                          child: Image.network(
-                                            valueOrDefault<String>(
+                                          child: CachedNetworkImage(
+                                            imageUrl: valueOrDefault<String>(
                                               currentUserPhoto,
                                               'https://st3.depositphotos.com/6672868/13701/v/600/depositphotos_137014128-stock-illustration-user-profile-icon.jpg',
                                             ),

@@ -4,6 +4,7 @@ import '../chat/chat_widget.dart';
 import '../components/chat_display_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -162,8 +163,8 @@ class _MessagesWidgetState extends State<MessagesWidget> {
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                       ),
-                                      child: Image.network(
-                                        valueOrDefault<String>(
+                                      child: CachedNetworkImage(
+                                        imageUrl: valueOrDefault<String>(
                                           listViewUserRecord.photoUrl,
                                           'https://st3.depositphotos.com/6672868/13701/v/600/depositphotos_137014128-stock-illustration-user-profile-icon.jpg',
                                         ),

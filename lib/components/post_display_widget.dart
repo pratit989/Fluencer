@@ -2,6 +2,7 @@ import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_video_player.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -26,17 +27,18 @@ class _PostDisplayWidgetState extends State<PostDisplayWidget> {
           FlutterFlowVideoPlayer(
             path: widget.postRef.postVideoUrl,
             videoType: VideoType.network,
-            autoPlay: true,
+            autoPlay: false,
             looping: true,
             showControls: false,
             allowFullScreen: false,
             allowPlaybackSpeedMenu: false,
+            lazyLoad: true,
           ),
         if ((widget.postRef.postType) == 'img')
           Align(
             alignment: AlignmentDirectional(0, 0),
-            child: Image.network(
-              widget.postRef.postImgUrl,
+            child: CachedNetworkImage(
+              imageUrl: widget.postRef.postImgUrl,
               fit: BoxFit.cover,
             ),
           ),

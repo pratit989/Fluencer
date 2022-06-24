@@ -8,6 +8,7 @@ import '../flutter_flow/flutter_flow_video_player.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
 import '../main.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -168,8 +169,8 @@ class _PostCreationWidgetState extends State<PostCreationWidget> {
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     20, 20, 20, 20),
-                                child: Image.network(
-                                  uploadedFileUrl2,
+                                child: CachedNetworkImage(
+                                  imageUrl: uploadedFileUrl2,
                                   width: MediaQuery.of(context).size.width,
                                   height:
                                       MediaQuery.of(context).size.height * 1,

@@ -1,6 +1,7 @@
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -54,8 +55,8 @@ class _ChatDisplayWidgetState extends State<ChatDisplayWidget> {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                   ),
-                  child: Image.network(
-                    valueOrDefault<String>(
+                  child: CachedNetworkImage(
+                    imageUrl: valueOrDefault<String>(
                       widget.userDoc.photoUrl,
                       'https://st3.depositphotos.com/6672868/13701/v/600/depositphotos_137014128-stock-illustration-user-profile-icon.jpg',
                     ),

@@ -7,6 +7,7 @@ import '../flutter_flow/flutter_flow_toggle_icon.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_video_player.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -87,18 +88,18 @@ class _PostViewerWidgetState extends State<PostViewerWidget> {
                               path: postViewerPostsRecord.postVideoUrl,
                               videoType: VideoType.network,
                               width: MediaQuery.of(context).size.width,
-                              autoPlay: false,
+                              autoPlay: true,
                               looping: true,
                               showControls: true,
                               allowFullScreen: true,
-                              allowPlaybackSpeedMenu: false,
+                              allowPlaybackSpeedMenu: true,
                             ),
                           ),
                         if ((postViewerPostsRecord.postType) == 'img')
                           Align(
                             alignment: AlignmentDirectional(0, 0),
-                            child: Image.network(
-                              postViewerPostsRecord.postImgUrl,
+                            child: CachedNetworkImage(
+                              imageUrl: postViewerPostsRecord.postImgUrl,
                               fit: BoxFit.fill,
                             ),
                           ),
