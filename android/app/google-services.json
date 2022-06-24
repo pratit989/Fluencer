@@ -1,37 +1,45 @@
 {
   "project_info": {
-    "project_number": "900534815652",
-    "project_id": "fluencer2-3aa9b",
-    "storage_bucket": "fluencer2-3aa9b.appspot.com"
+    "project_number": "578765893942",
+    "project_id": "fluncer-88b1f",
+    "storage_bucket": "fluncer-88b1f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:900534815652:android:689f9b954cae5e86facf31",
+        "mobilesdk_app_id": "1:578765893942:android:800945de6b3c50744e4397",
         "android_client_info": {
           "package_name": "com.connectia.fluncer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "900534815652-fnraebljc3mjsqm4a39iovjae8h7tdfk.apps.googleusercontent.com",
+          "client_id": "578765893942-m4i47rgja35udl67ef7r907b92rj4lpq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.connectia.fluncer",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "578765893942-ta0rlkj80o7ts9c3coesieq4tb93e0qb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBnmY-ggyzAzYMLNeYYTDhU3Oa6WbQG9LA"
+          "current_key": "AIzaSyBrII6jUSUZymxBo1xL9OdteiqgSR9X_gQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "900534815652-fnraebljc3mjsqm4a39iovjae8h7tdfk.apps.googleusercontent.com",
+              "client_id": "578765893942-ta0rlkj80o7ts9c3coesieq4tb93e0qb.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "900534815652-57v305aoqkq739hr1gusl6hdlbj8ifb6.apps.googleusercontent.com",
+              "client_id": "578765893942-s0r0j4f6ha4o78c8uf76029dlgljjj06.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.connectia.fluncer"
