@@ -1,4 +1,3 @@
-import '../components/notification_display_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -80,9 +79,7 @@ class _NotificationsWidgetState extends State<NotificationsWidget> {
           onTap: () => FocusScope.of(context).unfocus(),
           child: Column(
             mainAxisSize: MainAxisSize.max,
-            children: [
-              NotificationDisplayWidget(),
-            ],
+            children: [],
           ),
         ),
       ),
