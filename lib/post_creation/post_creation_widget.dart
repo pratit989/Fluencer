@@ -209,25 +209,28 @@ class _PostCreationWidgetState extends State<PostCreationWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          final postsCreateData = createPostsRecordData(
-                            postImgUrl: uploadedFileUrl2,
-                            postVideoUrl: uploadedFileUrl1,
-                            postType: FFAppState().currentPostType,
-                            postTime: getCurrentTimestamp,
-                            description: textController.text,
-                          );
-                          var postsRecordReference =
-                              PostsRecord.createDoc(currentUserReference);
-                          await postsRecordReference.set(postsCreateData);
-                          newPostDocument = PostsRecord.getDocumentFromData(
-                              postsCreateData, postsRecordReference);
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  NavBarPage(initialPage: 'Profile'),
-                            ),
-                          );
+                          if ((FFAppState().currentPostType != null) &&
+                              (FFAppState().currentPostType != '')) {
+                            final postsCreateData = createPostsRecordData(
+                              postImgUrl: uploadedFileUrl2,
+                              postVideoUrl: uploadedFileUrl1,
+                              postType: FFAppState().currentPostType,
+                              postTime: getCurrentTimestamp,
+                              description: textController.text,
+                            );
+                            var postsRecordReference =
+                                PostsRecord.createDoc(currentUserReference);
+                            await postsRecordReference.set(postsCreateData);
+                            newPostDocument = PostsRecord.getDocumentFromData(
+                                postsCreateData, postsRecordReference);
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    NavBarPage(initialPage: 'Profile'),
+                              ),
+                            );
+                          }
 
                           setState(() {});
                         },
