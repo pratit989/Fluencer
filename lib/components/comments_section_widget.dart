@@ -45,39 +45,42 @@ class _CommentsSectionWidgetState extends State<CommentsSectionWidget> {
       ),
       child: Stack(
         children: [
-          StreamBuilder<List<CommentsRecord>>(
-            stream: queryCommentsRecord(
-              queryBuilder: (commentsRecord) =>
-                  commentsRecord.where('post_ref', isEqualTo: widget.postRef),
-            ),
-            builder: (context, snapshot) {
-              // Customize what your widget looks like when it's loading.
-              if (!snapshot.hasData) {
-                return Center(
-                  child: SizedBox(
-                    width: 50,
-                    height: 50,
-                    child: CircularProgressIndicator(
-                      color: Color(0xFFFF640D),
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+            child: StreamBuilder<List<CommentsRecord>>(
+              stream: queryCommentsRecord(
+                queryBuilder: (commentsRecord) =>
+                    commentsRecord.where('post_ref', isEqualTo: widget.postRef),
+              ),
+              builder: (context, snapshot) {
+                // Customize what your widget looks like when it's loading.
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: CircularProgressIndicator(
+                        color: Color(0xFFFF640D),
+                      ),
                     ),
-                  ),
-                );
-              }
-              List<CommentsRecord> listViewCommentsRecordList = snapshot.data;
-              return ListView.builder(
-                padding: EdgeInsets.zero,
-                scrollDirection: Axis.vertical,
-                itemCount: listViewCommentsRecordList.length,
-                itemBuilder: (context, listViewIndex) {
-                  final listViewCommentsRecord =
-                      listViewCommentsRecordList[listViewIndex];
-                  return CommentDisplayWidget(
-                    commentDoc: listViewCommentsRecord,
-                    userRef: listViewCommentsRecord.userRef,
                   );
-                },
-              );
-            },
+                }
+                List<CommentsRecord> listViewCommentsRecordList = snapshot.data;
+                return ListView.builder(
+                  padding: EdgeInsets.zero,
+                  scrollDirection: Axis.vertical,
+                  itemCount: listViewCommentsRecordList.length,
+                  itemBuilder: (context, listViewIndex) {
+                    final listViewCommentsRecord =
+                        listViewCommentsRecordList[listViewIndex];
+                    return CommentDisplayWidget(
+                      commentDoc: listViewCommentsRecord,
+                      userRef: listViewCommentsRecord.userRef,
+                    );
+                  },
+                );
+              },
+            ),
           ),
           Align(
             alignment: AlignmentDirectional(0, 1),
