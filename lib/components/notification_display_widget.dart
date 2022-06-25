@@ -1,11 +1,17 @@
+import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class NotificationDisplayWidget extends StatefulWidget {
-  const NotificationDisplayWidget({Key key}) : super(key: key);
+  const NotificationDisplayWidget({
+    Key key,
+    this.notificationRef,
+  }) : super(key: key);
+
+  final PushNotificationsRecord notificationRef;
 
   @override
   _NotificationDisplayWidgetState createState() =>
@@ -23,21 +29,24 @@ class _NotificationDisplayWidgetState extends State<NotificationDisplayWidget> {
       ),
       child: Row(
         mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-            child: Container(
-              width: 80,
-              height: 80,
-              clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-              ),
-              child: Image.network(
-                'https://picsum.photos/seed/764/600',
+          if ((widget.notificationRef.notificationImageUrl != null) &&
+              (widget.notificationRef.notificationImageUrl != ''))
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+              child: Container(
+                width: 80,
+                height: 80,
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                ),
+                child: Image.network(
+                  widget.notificationRef.notificationImageUrl,
+                ),
               ),
             ),
-          ),
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
             child: Column(
@@ -45,14 +54,15 @@ class _NotificationDisplayWidgetState extends State<NotificationDisplayWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Name',
+                  widget.notificationRef.notificationTitle,
                   style: FlutterFlowTheme.of(context).bodyText1.override(
                         fontFamily: 'Poppins',
                         color: FlutterFlowTheme.of(context).primaryBtnText,
                       ),
                 ),
-                Text(
-                  'hours ag0',
+                AutoSizeText(
+                  widget.notificationRef.notificationText,
+                  maxLines: 2,
                   style: FlutterFlowTheme.of(context).bodyText1.override(
                         fontFamily: 'Poppins',
                         color: Color(0x67FFFFFF),
@@ -61,28 +71,14 @@ class _NotificationDisplayWidgetState extends State<NotificationDisplayWidget> {
               ],
             ),
           ),
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(60, 0, 0, 0),
-            child: FFButtonWidget(
-              onPressed: () {
-                print('Button pressed ...');
-              },
-              text: 'FOLLOW',
-              options: FFButtonOptions(
-                width: 100,
-                height: 30,
-                color: Color(0xFFFF640D),
-                textStyle: FlutterFlowTheme.of(context).subtitle2.override(
-                      fontFamily: 'Poppins',
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal,
-                    ),
-                borderSide: BorderSide(
-                  color: Colors.transparent,
-                  width: 1,
-                ),
-                borderRadius: 12,
-              ),
+          Expanded(
+            child: Text(
+              dateTimeFormat('relative', widget.notificationRef.timestamp),
+              textAlign: TextAlign.end,
+              style: FlutterFlowTheme.of(context).bodyText1.override(
+                    fontFamily: 'Poppins',
+                    color: Colors.white,
+                  ),
             ),
           ),
         ],

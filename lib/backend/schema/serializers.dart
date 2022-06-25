@@ -6,6 +6,7 @@ import 'comments_record.dart';
 import 'conversations_record.dart';
 import 'messages_record.dart';
 import 'conversation_refs_record.dart';
+import 'push_notifications_record.dart';
 
 import 'index.dart';
 
@@ -22,6 +23,7 @@ const kDocumentReferenceField = 'Document__Reference__Field';
   ConversationsRecord,
   MessagesRecord,
   ConversationRefsRecord,
+  PushNotificationsRecord,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..add(DocumentReferenceSerializer())

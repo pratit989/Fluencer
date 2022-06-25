@@ -1,6 +1,5 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../backend/push_notifications/push_notifications_util.dart';
 import '../comments/comments_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -26,6 +25,7 @@ class PostViewerWidget extends StatefulWidget {
 }
 
 class _PostViewerWidgetState extends State<PostViewerWidget> {
+  PushNotificationsRecord newNotification;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -221,27 +221,45 @@ class _PostViewerWidgetState extends State<PostViewerWidget> {
                                                               .update(
                                                                   userUpdateData);
                                                         }
-                                                        triggerPushNotification(
-                                                          notificationTitle:
-                                                              'New Follower',
-                                                          notificationText:
-                                                              '${valueOrDefault<String>(
-                                                            currentUserDisplayName,
-                                                            'Unknown',
-                                                          )} started following you',
-                                                          notificationImageUrl:
+
+                                                        final pushNotificationsCreateData =
+                                                            {
+                                                          ...createPushNotificationsRecordData(
+                                                            notificationImageUrl:
+                                                                rowUserRecord
+                                                                    .photoUrl,
+                                                            notificationText:
+                                                                '${valueOrDefault<String>(
                                                               rowUserRecord
-                                                                  .photoUrl,
-                                                          notificationSound:
-                                                              'default',
-                                                          userRefs: [
+                                                                  .displayName,
+                                                              'Unknown',
+                                                            )} started follwing you',
+                                                            notificationTitle:
+                                                                'New Follower',
+                                                            sender:
+                                                                currentUserReference,
+                                                            timestamp:
+                                                                getCurrentTimestamp,
+                                                          ),
+                                                          'user_refs': [
                                                             rowUserRecord
                                                                 .reference
                                                           ],
-                                                          initialPageName:
-                                                              'Profile',
-                                                          parameterData: {},
-                                                        );
+                                                        };
+                                                        var pushNotificationsRecordReference =
+                                                            PushNotificationsRecord
+                                                                .collection
+                                                                .doc();
+                                                        await pushNotificationsRecordReference
+                                                            .set(
+                                                                pushNotificationsCreateData);
+                                                        newNotification =
+                                                            PushNotificationsRecord
+                                                                .getDocumentFromData(
+                                                                    pushNotificationsCreateData,
+                                                                    pushNotificationsRecordReference);
+
+                                                        setState(() {});
                                                       },
                                                       text: 'Follow',
                                                       options: FFButtonOptions(

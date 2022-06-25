@@ -10,6 +10,7 @@ import 'schema/comments_record.dart';
 import 'schema/conversations_record.dart';
 import 'schema/messages_record.dart';
 import 'schema/conversation_refs_record.dart';
+import 'schema/push_notifications_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -23,6 +24,7 @@ export 'schema/comments_record.dart';
 export 'schema/conversations_record.dart';
 export 'schema/messages_record.dart';
 export 'schema/conversation_refs_record.dart';
+export 'schema/push_notifications_record.dart';
 
 /// Functions to query UserRecords (as a Stream and as a Future).
 Stream<List<UserRecord>> queryUserRecord({
@@ -280,6 +282,49 @@ Future<FFFirestorePage<ConversationRefsRecord>>
         queryCollectionPage(
           ConversationRefsRecord.collection(parent),
           ConversationRefsRecord.serializer,
+          queryBuilder: queryBuilder,
+          nextPageMarker: nextPageMarker,
+          pageSize: pageSize,
+          isStream: isStream,
+        );
+
+/// Functions to query PushNotificationsRecords (as a Stream and as a Future).
+Stream<List<PushNotificationsRecord>> queryPushNotificationsRecord({
+  Query Function(Query) queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      PushNotificationsRecord.collection,
+      PushNotificationsRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<PushNotificationsRecord>> queryPushNotificationsRecordOnce({
+  Query Function(Query) queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      PushNotificationsRecord.collection,
+      PushNotificationsRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<PushNotificationsRecord>>
+    queryPushNotificationsRecordPage({
+  Query Function(Query) queryBuilder,
+  DocumentSnapshot nextPageMarker,
+  int pageSize,
+  bool isStream,
+}) =>
+        queryCollectionPage(
+          PushNotificationsRecord.collection,
+          PushNotificationsRecord.serializer,
           queryBuilder: queryBuilder,
           nextPageMarker: nextPageMarker,
           pageSize: pageSize,
