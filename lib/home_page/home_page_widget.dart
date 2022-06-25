@@ -25,6 +25,7 @@ class HomePageWidget extends StatefulWidget {
 class _HomePageWidgetState extends State<HomePageWidget> {
   List<UserRecord> simpleSearchResults = [];
   TextEditingController textController;
+  final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -341,79 +342,86 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             color: Color(0x1AFFFFFF),
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          child: TextFormField(
-                            controller: textController,
-                            onChanged: (_) => EasyDebounce.debounce(
-                              'textController',
-                              Duration(milliseconds: 2000),
-                              () => setState(() {}),
-                            ),
-                            onFieldSubmitted: (_) async {
-                              await queryUserRecordOnce()
-                                  .then(
-                                    (records) => simpleSearchResults =
-                                        TextSearch(
-                                      records
-                                          .map(
-                                            (record) => TextSearchItem(record, [
-                                              record.email,
-                                              record.displayName,
-                                              record.phoneNumber
-                                            ]),
-                                          )
-                                          .toList(),
-                                    )
-                                            .search(textController.text)
-                                            .map((r) => r.object)
+                          child: Form(
+                            key: formKey,
+                            autovalidateMode: AutovalidateMode.always,
+                            child: TextFormField(
+                              controller: textController,
+                              onChanged: (_) => EasyDebounce.debounce(
+                                'textController',
+                                Duration(milliseconds: 2000),
+                                () => setState(() {}),
+                              ),
+                              onFieldSubmitted: (_) async {
+                                await queryUserRecordOnce()
+                                    .then(
+                                      (records) => simpleSearchResults =
+                                          TextSearch(
+                                        records
+                                            .map(
+                                              (record) => TextSearchItem(
+                                                  record, [
+                                                record.email,
+                                                record.displayName,
+                                                record.phoneNumber
+                                              ]),
+                                            )
                                             .toList(),
-                                  )
-                                  .onError((_, __) => simpleSearchResults = [])
-                                  .whenComplete(() => setState(() {}));
-                            },
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              hintText: 'Search',
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
-                              ),
-                              contentPadding:
-                                  EdgeInsetsDirectional.fromSTEB(20, 0, 0, 15),
-                              suffixIcon: textController.text.isNotEmpty
-                                  ? InkWell(
-                                      onTap: () => setState(
-                                        () => textController?.clear(),
-                                      ),
-                                      child: Icon(
-                                        Icons.clear,
-                                        color: Color(0xFF757575),
-                                        size: 22,
-                                      ),
+                                      )
+                                              .search(textController.text)
+                                              .map((r) => r.object)
+                                              .toList(),
                                     )
-                                  : null,
+                                    .onError(
+                                        (_, __) => simpleSearchResults = [])
+                                    .whenComplete(() => setState(() {}));
+                              },
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                hintText: 'Search',
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                contentPadding: EdgeInsetsDirectional.fromSTEB(
+                                    20, 0, 0, 15),
+                                suffixIcon: textController.text.isNotEmpty
+                                    ? InkWell(
+                                        onTap: () => setState(
+                                          () => textController?.clear(),
+                                        ),
+                                        child: Icon(
+                                          Icons.clear,
+                                          color: Color(0xFF757575),
+                                          size: 22,
+                                        ),
+                                      )
+                                    : null,
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    color: Color(0x34FFFFFF),
+                                    fontWeight: FontWeight.normal,
+                                  ),
                             ),
-                            style:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      color: Color(0x34FFFFFF),
-                                      fontWeight: FontWeight.normal,
-                                    ),
                           ),
                         ),
                       ),
@@ -428,8 +436,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           color: Color(0xFFFF640D),
                           size: 20,
                         ),
-                        onPressed: () {
-                          print('IconButton pressed ...');
+                        onPressed: () async {
+                          if (formKey.currentState == null ||
+                              !formKey.currentState.validate()) {
+                            return;
+                          }
                         },
                       ),
                     ],
