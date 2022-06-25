@@ -92,6 +92,22 @@ class _CommentDisplayWidgetState extends State<CommentDisplayWidget> {
                             fontWeight: FontWeight.normal,
                           ),
                     ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          '${valueOrDefault<String>(
+                            widget.commentDoc.likes.toList().length.toString(),
+                            '0',
+                          )} Likes',
+                          style:
+                              FlutterFlowTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Poppins',
+                                    color: Color(0x7FFFFFFF),
+                                  ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
