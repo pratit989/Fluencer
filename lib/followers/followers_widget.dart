@@ -1,5 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../components/empty_followers_list_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -33,8 +34,8 @@ class _FollowersWidgetState extends State<FollowersWidget> {
             color: Colors.white,
             size: 30,
           ),
-          onPressed: () {
-            print('IconButton pressed ...');
+          onPressed: () async {
+            Navigator.pop(context);
           },
         ),
         title: Text(
@@ -60,6 +61,11 @@ class _FollowersWidgetState extends State<FollowersWidget> {
                     (currentUserDocument?.followers?.toList() ?? [])
                             ?.toList() ??
                         [];
+                if (followers.isEmpty) {
+                  return Center(
+                    child: EmptyFollowersListWidget(),
+                  );
+                }
                 return ListView.builder(
                   padding: EdgeInsets.zero,
                   scrollDirection: Axis.vertical,
