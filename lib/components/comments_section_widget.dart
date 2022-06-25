@@ -23,6 +23,7 @@ class CommentsSectionWidget extends StatefulWidget {
 
 class _CommentsSectionWidgetState extends State<CommentsSectionWidget> {
   CommentsRecord newComment;
+  PushNotificationsRecord newNotification;
   TextEditingController textController;
 
   @override
@@ -170,30 +171,79 @@ class _CommentsSectionWidgetState extends State<CommentsSectionWidget> {
                   ),
                   Align(
                     alignment: AlignmentDirectional(1, 0),
-                    child: FlutterFlowIconButton(
-                      borderColor: Colors.transparent,
-                      borderRadius: 30,
-                      borderWidth: 1,
-                      buttonSize: 60,
-                      icon: Icon(
-                        Icons.send,
-                        color: Color(0xFFFF640D),
-                        size: 30,
-                      ),
-                      onPressed: () async {
-                        final commentsCreateData = createCommentsRecordData(
-                          text: textController.text,
-                          commentTime: getCurrentTimestamp,
-                          userRef: currentUserReference,
-                          postRef: widget.postRef,
-                        );
-                        var commentsRecordReference =
-                            CommentsRecord.collection.doc();
-                        await commentsRecordReference.set(commentsCreateData);
-                        newComment = CommentsRecord.getDocumentFromData(
-                            commentsCreateData, commentsRecordReference);
+                    child: FutureBuilder<PostsRecord>(
+                      future: PostsRecord.getDocumentOnce(widget.postRef),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: CircularProgressIndicator(
+                                color: Color(0xFFFF640D),
+                              ),
+                            ),
+                          );
+                        }
+                        final iconButtonPostsRecord = snapshot.data;
+                        return FlutterFlowIconButton(
+                          borderColor: Colors.transparent,
+                          borderRadius: 30,
+                          borderWidth: 1,
+                          buttonSize: 60,
+                          icon: Icon(
+                            Icons.send,
+                            color: Color(0xFFFF640D),
+                            size: 30,
+                          ),
+                          onPressed: () async {
+                            final commentsCreateData = createCommentsRecordData(
+                              text: textController.text,
+                              commentTime: getCurrentTimestamp,
+                              userRef: currentUserReference,
+                              postRef: widget.postRef,
+                            );
+                            var commentsRecordReference =
+                                CommentsRecord.collection.doc();
+                            await commentsRecordReference
+                                .set(commentsCreateData);
+                            newComment = CommentsRecord.getDocumentFromData(
+                                commentsCreateData, commentsRecordReference);
 
-                        setState(() {});
+                            final pushNotificationsCreateData = {
+                              ...createPushNotificationsRecordData(
+                                notificationImageUrl: currentUserPhoto,
+                                notificationText: valueOrDefault<String>(
+                                  'You have a new comment from ${valueOrDefault<String>(
+                                    currentUserDisplayName,
+                                    'Unknown',
+                                  )} on your ${valueOrDefault<String>(
+                                    iconButtonPostsRecord.postType,
+                                    'post',
+                                  )}',
+                                  'A new comment',
+                                ),
+                                notificationTitle: 'New Comment',
+                                sender: currentUserReference,
+                                timestamp: getCurrentTimestamp,
+                              ),
+                              'user_refs': [
+                                iconButtonPostsRecord.parentReference
+                              ],
+                            };
+                            var pushNotificationsRecordReference =
+                                PushNotificationsRecord.collection.doc();
+                            await pushNotificationsRecordReference
+                                .set(pushNotificationsCreateData);
+                            newNotification =
+                                PushNotificationsRecord.getDocumentFromData(
+                                    pushNotificationsCreateData,
+                                    pushNotificationsRecordReference);
+
+                            setState(() {});
+                          },
+                        );
                       },
                     ),
                   ),

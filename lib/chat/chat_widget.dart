@@ -26,8 +26,10 @@ class _ChatWidgetState extends State<ChatWidget> {
   ConversationRefsRecord conversationRef;
   ConversationsRecord newConversation;
   MessagesRecord firstMessage;
+  PushNotificationsRecord newNotification;
   TextEditingController textController;
   MessagesRecord lastMessage;
+  PushNotificationsRecord newNotification2;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -299,6 +301,29 @@ class _ChatWidgetState extends State<ChatWidget> {
                                     conversationRefsCreateData,
                                     conversationRefsRecordReference);
 
+                            final pushNotificationsCreateData = {
+                              ...createPushNotificationsRecordData(
+                                notificationImageUrl: currentUserPhoto,
+                                notificationText:
+                                    'You have a new message from ${valueOrDefault<String>(
+                                  currentUserDisplayName,
+                                  'Unknown',
+                                )}',
+                                notificationTitle: 'New Message',
+                                sender: currentUserReference,
+                                timestamp: getCurrentTimestamp,
+                              ),
+                              'user_refs': [widget.userDoc.reference],
+                            };
+                            var pushNotificationsRecordReference =
+                                PushNotificationsRecord.collection.doc();
+                            await pushNotificationsRecordReference
+                                .set(pushNotificationsCreateData);
+                            newNotification =
+                                PushNotificationsRecord.getDocumentFromData(
+                                    pushNotificationsCreateData,
+                                    pushNotificationsRecordReference);
+
                             setState(() {});
                           },
                         ),
@@ -365,6 +390,29 @@ class _ChatWidgetState extends State<ChatWidget> {
                                     MessagesRecord.getDocumentFromData(
                                         messagesCreateData,
                                         messagesRecordReference);
+
+                                final pushNotificationsCreateData = {
+                                  ...createPushNotificationsRecordData(
+                                    notificationImageUrl: currentUserPhoto,
+                                    notificationText:
+                                        'You have a new message from ${valueOrDefault<String>(
+                                      currentUserDisplayName,
+                                      'Unknown',
+                                    )}',
+                                    notificationTitle: 'New Message',
+                                    sender: currentUserReference,
+                                    timestamp: getCurrentTimestamp,
+                                  ),
+                                  'user_refs': [widget.userDoc.reference],
+                                };
+                                var pushNotificationsRecordReference =
+                                    PushNotificationsRecord.collection.doc();
+                                await pushNotificationsRecordReference
+                                    .set(pushNotificationsCreateData);
+                                newNotification2 =
+                                    PushNotificationsRecord.getDocumentFromData(
+                                        pushNotificationsCreateData,
+                                        pushNotificationsRecordReference);
 
                                 setState(() {});
                               },
