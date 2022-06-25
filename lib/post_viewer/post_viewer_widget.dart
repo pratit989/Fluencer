@@ -441,7 +441,7 @@ class _PostViewerWidgetState extends State<PostViewerWidget> {
                                             height: MediaQuery.of(context)
                                                     .size
                                                     .height *
-                                                0.6,
+                                                0.5,
                                             child: CommentsSectionWidget(
                                               postRef: widget.postRef,
                                             ),
