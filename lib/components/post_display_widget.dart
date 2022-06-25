@@ -29,7 +29,6 @@ class _PostDisplayWidgetState extends State<PostDisplayWidget> {
             child: FlutterFlowVideoPlayer(
               path: widget.postRef.postVideoUrl,
               videoType: VideoType.network,
-              width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 1,
               autoPlay: false,
               looping: true,
@@ -45,6 +44,15 @@ class _PostDisplayWidgetState extends State<PostDisplayWidget> {
             child: CachedNetworkImage(
               imageUrl: widget.postRef.postImgUrl,
               fit: BoxFit.cover,
+            ),
+          ),
+        if ((widget.postRef.postType) == 'video')
+          Align(
+            alignment: AlignmentDirectional(0, 0),
+            child: Icon(
+              Icons.play_circle_fill_outlined,
+              color: Color(0x80000000),
+              size: 50,
             ),
           ),
       ],
