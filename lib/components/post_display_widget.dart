@@ -24,15 +24,20 @@ class _PostDisplayWidgetState extends State<PostDisplayWidget> {
     return Stack(
       children: [
         if ((widget.postRef.postType) == 'video')
-          FlutterFlowVideoPlayer(
-            path: widget.postRef.postVideoUrl,
-            videoType: VideoType.network,
-            autoPlay: false,
-            looping: true,
-            showControls: false,
-            allowFullScreen: false,
-            allowPlaybackSpeedMenu: false,
-            lazyLoad: false,
+          Align(
+            alignment: AlignmentDirectional(0, 0),
+            child: FlutterFlowVideoPlayer(
+              path: widget.postRef.postVideoUrl,
+              videoType: VideoType.network,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 1,
+              autoPlay: false,
+              looping: true,
+              showControls: false,
+              allowFullScreen: false,
+              allowPlaybackSpeedMenu: false,
+              lazyLoad: false,
+            ),
           ),
         if ((widget.postRef.postType) == 'img')
           Align(
