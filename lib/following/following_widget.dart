@@ -5,7 +5,6 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FollowingWidget extends StatefulWidget {
@@ -17,15 +16,6 @@ class FollowingWidget extends StatefulWidget {
 
 class _FollowingWidgetState extends State<FollowingWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  void initState() {
-    super.initState();
-    // On page load action.
-    SchedulerBinding.instance?.addPostFrameCallback((_) async {
-      Navigator.pop(context);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
