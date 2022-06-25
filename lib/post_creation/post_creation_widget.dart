@@ -118,52 +118,51 @@ class _PostCreationWidgetState extends State<PostCreationWidget> {
                       visible: !(FFAppState().uploadSelectionVisiblity) ?? true,
                       child: Stack(
                         children: [
-                          if ((FFAppState().currentPostType) != 'video')
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Align(
-                                    alignment: AlignmentDirectional(0, 0),
-                                    child: FlutterFlowIconButton(
-                                      borderColor: Color(0xFFFF640D),
-                                      borderRadius: 30,
-                                      borderWidth: 1,
-                                      buttonSize: 120,
-                                      icon: Icon(
-                                        Icons.cloud_upload,
-                                        color: Color(0xFFFF640D),
-                                        size: 60,
-                                      ),
-                                      onPressed: () async {
-                                        setState(() => FFAppState()
-                                                .uploadSelectionVisiblity =
-                                            !(FFAppState()
-                                                .uploadSelectionVisiblity));
-                                      },
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Align(
+                                  alignment: AlignmentDirectional(0, 0),
+                                  child: FlutterFlowIconButton(
+                                    borderColor: Color(0xFFFF640D),
+                                    borderRadius: 30,
+                                    borderWidth: 1,
+                                    buttonSize: 120,
+                                    icon: Icon(
+                                      Icons.cloud_upload,
+                                      color: Color(0xFFFF640D),
+                                      size: 60,
+                                    ),
+                                    onPressed: () async {
+                                      setState(() => FFAppState()
+                                              .uploadSelectionVisiblity =
+                                          !(FFAppState()
+                                              .uploadSelectionVisiblity));
+                                    },
+                                  ),
+                                ),
+                                Align(
+                                  alignment: AlignmentDirectional(0, 0),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 10, 0, 0),
+                                    child: Text(
+                                      'Upload Media',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            color: Colors.white,
+                                          ),
                                     ),
                                   ),
-                                  Align(
-                                    alignment: AlignmentDirectional(0, 0),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 10, 0, 0),
-                                      child: Text(
-                                        'Upload Media',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText1
-                                            .override(
-                                              fontFamily: 'Poppins',
-                                              color: Colors.white,
-                                            ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
+                          ),
                           if ((FFAppState().currentPostType) == 'img')
                             Align(
                               alignment: AlignmentDirectional(0, 0),

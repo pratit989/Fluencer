@@ -825,53 +825,44 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         Padding(
                           padding:
                               EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              FFButtonWidget(
-                                onPressed: () async {
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => FollowingWidget(),
-                                    ),
-                                  );
-                                },
-                                text: profileUserRecord.following
-                                    .toList()
-                                    .length
-                                    .toString(),
-                                options: FFButtonOptions(
-                                  width: 130,
-                                  height: 30,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle2
+                          child: InkWell(
+                            onTap: () async {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FollowingWidget(),
+                                ),
+                              );
+                            },
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  profileUserRecord.following
+                                      .toList()
+                                      .length
+                                      .toString(),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
                                       .override(
                                         fontFamily: 'Poppins',
-                                        color: Colors.white,
-                                        fontSize: 14,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryBtnText,
                                       ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
-                                  ),
-                                  borderRadius: 12,
                                 ),
-                              ),
-                              Text(
-                                'Following',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      color: Color(0x67FFFFFF),
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                              ),
-                            ],
+                                Text(
+                                  'Following',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        color: Color(0x67FFFFFF),
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         Padding(
