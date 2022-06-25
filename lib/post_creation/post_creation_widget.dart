@@ -187,10 +187,7 @@ class _PostCreationWidgetState extends State<PostCreationWidget> {
                                 child: FlutterFlowVideoPlayer(
                                   path: uploadedFileUrl1,
                                   videoType: VideoType.network,
-                                  width: MediaQuery.of(context).size.width,
-                                  height:
-                                      MediaQuery.of(context).size.height * 1,
-                                  autoPlay: false,
+                                  autoPlay: true,
                                   looping: true,
                                   showControls: true,
                                   allowFullScreen: true,
