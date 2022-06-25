@@ -36,6 +36,12 @@ class _CommentsSectionWidgetState extends State<CommentsSectionWidget> {
     return Container(
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primaryColor,
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(0),
+          bottomRight: Radius.circular(0),
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
       ),
       child: Stack(
         children: [
@@ -88,7 +94,6 @@ class _CommentsSectionWidgetState extends State<CommentsSectionWidget> {
                         Duration(milliseconds: 2000),
                         () => setState(() {}),
                       ),
-                      autofocus: true,
                       obscureText: false,
                       decoration: InputDecoration(
                         hintText: 'Write a comment...',

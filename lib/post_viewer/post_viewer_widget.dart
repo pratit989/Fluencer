@@ -431,9 +431,7 @@ class _PostViewerWidgetState extends State<PostViewerWidget> {
                                   onPressed: () async {
                                     await showModalBottomSheet(
                                       isScrollControlled: true,
-                                      backgroundColor:
-                                          FlutterFlowTheme.of(context)
-                                              .primaryColor,
+                                      backgroundColor: Colors.transparent,
                                       context: context,
                                       builder: (context) {
                                         return Padding(

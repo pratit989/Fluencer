@@ -27,11 +27,15 @@ abstract class CommentsRecord
   DocumentReference get postRef;
 
   @nullable
+  BuiltList<DocumentReference> get likes;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
-  static void _initializeBuilder(CommentsRecordBuilder builder) =>
-      builder..text = '';
+  static void _initializeBuilder(CommentsRecordBuilder builder) => builder
+    ..text = ''
+    ..likes = ListBuilder();
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('comments');
@@ -66,4 +70,5 @@ Map<String, dynamic> createCommentsRecordData({
           ..text = text
           ..commentTime = commentTime
           ..userRef = userRef
-          ..postRef = postRef));
+          ..postRef = postRef
+          ..likes = null));
