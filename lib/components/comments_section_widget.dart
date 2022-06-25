@@ -201,6 +201,20 @@ class _CommentsSectionWidgetState extends State<CommentsSectionWidget> {
               ),
             ),
           ),
+          Align(
+            alignment: AlignmentDirectional(0, -1),
+            child: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.2,
+                height: 2,
+                decoration: BoxDecoration(
+                  color: Color(0x7FFFFFFF),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
