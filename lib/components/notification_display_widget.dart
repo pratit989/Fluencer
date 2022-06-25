@@ -47,28 +47,33 @@ class _NotificationDisplayWidgetState extends State<NotificationDisplayWidget> {
                 ),
               ),
             ),
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.notificationRef.notificationTitle,
-                  style: FlutterFlowTheme.of(context).bodyText1.override(
-                        fontFamily: 'Poppins',
-                        color: FlutterFlowTheme.of(context).primaryBtnText,
-                      ),
-                ),
-                AutoSizeText(
-                  widget.notificationRef.notificationText,
-                  maxLines: 2,
-                  style: FlutterFlowTheme.of(context).bodyText1.override(
-                        fontFamily: 'Poppins',
-                        color: Color(0x67FFFFFF),
-                      ),
-                ),
-              ],
+          Container(
+            width: MediaQuery.of(context).size.width * 0.5,
+            height: 100,
+            decoration: BoxDecoration(),
+            child: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.notificationRef.notificationTitle,
+                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                          fontFamily: 'Poppins',
+                          color: FlutterFlowTheme.of(context).primaryBtnText,
+                        ),
+                  ),
+                  AutoSizeText(
+                    widget.notificationRef.notificationText,
+                    maxLines: 2,
+                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                          fontFamily: 'Poppins',
+                          color: Color(0x67FFFFFF),
+                        ),
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(
