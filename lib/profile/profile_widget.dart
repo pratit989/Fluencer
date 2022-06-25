@@ -7,6 +7,8 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
+import '../followers/followers_widget.dart';
+import '../following/following_widget.dart';
 import '../post_viewer/post_viewer_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -823,67 +825,87 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         Padding(
                           padding:
                               EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                profileUserRecord.following
-                                    .toList()
-                                    .length
-                                    .toString(),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryBtnText,
-                                    ),
-                              ),
-                              Text(
-                                'Following',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      color: Color(0x67FFFFFF),
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                              ),
-                            ],
+                          child: InkWell(
+                            onTap: () async {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FollowingWidget(),
+                                ),
+                              );
+                            },
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  profileUserRecord.following
+                                      .toList()
+                                      .length
+                                      .toString(),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryBtnText,
+                                      ),
+                                ),
+                                Text(
+                                  'Following',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        color: Color(0x67FFFFFF),
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         Padding(
                           padding:
                               EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                profileUserRecord.followers
-                                    .toList()
-                                    .length
-                                    .toString(),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryBtnText,
-                                    ),
-                              ),
-                              Text(
-                                'Followers',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      color: Color(0x67FFFFFF),
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                              ),
-                            ],
+                          child: InkWell(
+                            onTap: () async {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FollowersWidget(),
+                                ),
+                              );
+                            },
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  profileUserRecord.followers
+                                      .toList()
+                                      .length
+                                      .toString(),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryBtnText,
+                                      ),
+                                ),
+                                Text(
+                                  'Followers',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        color: Color(0x67FFFFFF),
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],
