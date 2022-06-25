@@ -1,6 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../comments/comments_widget.dart';
+import '../components/comments_section_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_toggle_icon.dart';
@@ -429,13 +429,27 @@ class _PostViewerWidgetState extends State<PostViewerWidget> {
                                     size: 30,
                                   ),
                                   onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => CommentsWidget(
-                                          postRef: widget.postRef,
-                                        ),
-                                      ),
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor:
+                                          FlutterFlowTheme.of(context)
+                                              .primaryColor,
+                                      context: context,
+                                      builder: (context) {
+                                        return Padding(
+                                          padding:
+                                              MediaQuery.of(context).viewInsets,
+                                          child: Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.6,
+                                            child: CommentsSectionWidget(
+                                              postRef: widget.postRef,
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     );
                                   },
                                 ),
