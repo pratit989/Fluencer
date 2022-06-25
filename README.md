@@ -1,4 +1,4 @@
-# Fluencer
+# Fluncer
 
 A new Flutter project.
 

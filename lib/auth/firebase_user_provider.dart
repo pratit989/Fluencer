@@ -1,19 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rxdart/rxdart.dart';
 
-class FluencerFirebaseUser {
-  FluencerFirebaseUser(this.user);
+class FluncerFirebaseUser {
+  FluncerFirebaseUser(this.user);
   User user;
   bool get loggedIn => user != null;
 }
 
-FluencerFirebaseUser currentUser;
+FluncerFirebaseUser currentUser;
 bool get loggedIn => currentUser?.loggedIn ?? false;
-Stream<FluencerFirebaseUser> fluencerFirebaseUserStream() =>
-    FirebaseAuth.instance
-        .authStateChanges()
-        .debounce((user) => user == null && !loggedIn
-            ? TimerStream(true, const Duration(seconds: 1))
-            : Stream.value(user))
-        .map<FluencerFirebaseUser>(
-            (user) => currentUser = FluencerFirebaseUser(user));
+Stream<FluncerFirebaseUser> fluncerFirebaseUserStream() => FirebaseAuth.instance
+    .authStateChanges()
+    .debounce((user) => user == null && !loggedIn
+        ? TimerStream(true, const Duration(seconds: 1))
+        : Stream.value(user))
+    .map<FluncerFirebaseUser>(
+        (user) => currentUser = FluncerFirebaseUser(user));
