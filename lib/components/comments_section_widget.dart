@@ -88,46 +88,85 @@ class _CommentsSectionWidgetState extends State<CommentsSectionWidget> {
               height: MediaQuery.of(context).size.height * 0.07,
               child: Stack(
                 children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                    child: TextFormField(
-                      controller: textController,
-                      onChanged: (_) => EasyDebounce.debounce(
-                        'textController',
-                        Duration(milliseconds: 2000),
-                        () => setState(() {}),
-                      ),
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        hintText: 'Write a comment...',
-                        hintStyle:
-                            FlutterFlowTheme.of(context).bodyText1.override(
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w500,
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                          child: AuthUserStreamWidget(
+                            child: Container(
+                              width: 120,
+                              height: 120,
+                              clipBehavior: Clip.antiAlias,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                              ),
+                              child: Image.network(
+                                valueOrDefault<String>(
+                                  currentUserPhoto,
+                                  'https://st3.depositphotos.com/6672868/13701/v/600/depositphotos_137014128-stock-illustration-user-profile-icon.jpg',
                                 ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(20),
                         ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        filled: true,
-                        fillColor: Color(0xFF4C4F62),
                       ),
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Poppins',
-                            color: Colors.white,
+                      Align(
+                        alignment: AlignmentDirectional(1, 0),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          decoration: BoxDecoration(),
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                            child: TextFormField(
+                              controller: textController,
+                              onChanged: (_) => EasyDebounce.debounce(
+                                'textController',
+                                Duration(milliseconds: 2000),
+                                () => setState(() {}),
+                              ),
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                hintText: 'Write a comment...',
+                                hintStyle: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                filled: true,
+                                fillColor: Color(0xFF4C4F62),
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.white,
+                                  ),
+                              maxLines: 5,
+                            ),
                           ),
-                      maxLines: 5,
-                    ),
+                        ),
+                      ),
+                    ],
                   ),
                   Align(
                     alignment: AlignmentDirectional(1, 0),

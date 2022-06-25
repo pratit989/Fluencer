@@ -80,8 +80,8 @@ class _CommentDisplayWidgetState extends State<CommentDisplayWidget> {
                       style: FlutterFlowTheme.of(context).subtitle1.override(
                             fontFamily: 'Poppins',
                             color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
                           ),
                     ),
                     Text(
@@ -89,6 +89,7 @@ class _CommentDisplayWidgetState extends State<CommentDisplayWidget> {
                       style: FlutterFlowTheme.of(context).bodyText1.override(
                             fontFamily: 'Poppins',
                             color: Colors.white,
+                            fontSize: 12,
                             fontWeight: FontWeight.normal,
                           ),
                     ),
@@ -104,6 +105,7 @@ class _CommentDisplayWidgetState extends State<CommentDisplayWidget> {
                               FlutterFlowTheme.of(context).bodyText1.override(
                                     fontFamily: 'Poppins',
                                     color: Color(0x7FFFFFFF),
+                                    fontSize: 10,
                                   ),
                         ),
                       ],
