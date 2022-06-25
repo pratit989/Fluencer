@@ -1,5 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../backend/push_notifications/push_notifications_util.dart';
 import '../comments/comments_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -138,8 +139,8 @@ class _PostViewerWidgetState extends State<PostViewerWidget> {
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                         ),
-                                        child: Image.network(
-                                          valueOrDefault<String>(
+                                        child: CachedNetworkImage(
+                                          imageUrl: valueOrDefault<String>(
                                             rowUserRecord.photoUrl,
                                             'https://st3.depositphotos.com/6672868/13701/v/600/depositphotos_137014128-stock-illustration-user-profile-icon.jpg',
                                           ),
@@ -220,6 +221,27 @@ class _PostViewerWidgetState extends State<PostViewerWidget> {
                                                               .update(
                                                                   userUpdateData);
                                                         }
+                                                        triggerPushNotification(
+                                                          notificationTitle:
+                                                              'New Follower',
+                                                          notificationText:
+                                                              '${valueOrDefault<String>(
+                                                            currentUserDisplayName,
+                                                            'Unknown',
+                                                          )} started following you',
+                                                          notificationImageUrl:
+                                                              rowUserRecord
+                                                                  .photoUrl,
+                                                          notificationSound:
+                                                              'default',
+                                                          userRefs: [
+                                                            rowUserRecord
+                                                                .reference
+                                                          ],
+                                                          initialPageName:
+                                                              'Profile',
+                                                          parameterData: {},
+                                                        );
                                                       },
                                                       text: 'Follow',
                                                       options: FFButtonOptions(

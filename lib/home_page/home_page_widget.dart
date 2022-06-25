@@ -55,7 +55,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           },
         ),
         title: Text(
-          'FLUENCER',
+          'FLUNCER',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Poppins',
                 color: Color(0xFFFF640D),
