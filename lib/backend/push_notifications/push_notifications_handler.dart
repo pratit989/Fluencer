@@ -95,6 +95,8 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'Comments': (data) async => CommentsWidget(
         postRef: getParameter(data, 'postRef'),
       ),
+  'Followers': (data) async => FollowersWidget(),
+  'Following': (data) async => FollowingWidget(),
 };
 
 bool hasMatchingParameters(Map<String, dynamic> data, Set<String> params) =>
