@@ -32,7 +32,7 @@ class _PostDisplayWidgetState extends State<PostDisplayWidget> {
             showControls: false,
             allowFullScreen: false,
             allowPlaybackSpeedMenu: false,
-            lazyLoad: true,
+            lazyLoad: false,
           ),
         if ((widget.postRef.postType) == 'img')
           Align(
