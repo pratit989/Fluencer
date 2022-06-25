@@ -47,19 +47,20 @@ class _CommentDisplayWidgetState extends State<CommentDisplayWidget> {
           return Row(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  child: Image.network(
-                    valueOrDefault<String>(
-                      rowUserRecord.photoUrl,
-                      'https://st3.depositphotos.com/6672868/13701/v/600/depositphotos_137014128-stock-illustration-user-profile-icon.jpg',
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(20, 10, 10, 10),
+                  child: Container(
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: Image.network(
+                      valueOrDefault<String>(
+                        rowUserRecord.photoUrl,
+                        'https://st3.depositphotos.com/6672868/13701/v/600/depositphotos_137014128-stock-illustration-user-profile-icon.jpg',
+                      ),
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
