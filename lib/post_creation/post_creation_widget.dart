@@ -304,6 +304,8 @@ class _PostCreationWidgetState extends State<PostCreationWidget> {
                                 }
                               }
 
+                              setState(
+                                  () => FFAppState().currentPostType = 'video');
                               setState(() => FFAppState()
                                   .uploadSelectionVisiblity = false);
                             },

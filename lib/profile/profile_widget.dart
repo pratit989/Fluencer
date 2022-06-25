@@ -838,28 +838,48 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
-                                  profileUserRecord.following
-                                      .toList()
-                                      .length
-                                      .toString(),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Poppins',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryBtnText,
+                                InkWell(
+                                  onTap: () async {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => FollowingWidget(),
                                       ),
+                                    );
+                                  },
+                                  child: Text(
+                                    profileUserRecord.following
+                                        .toList()
+                                        .length
+                                        .toString(),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Poppins',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryBtnText,
+                                        ),
+                                  ),
                                 ),
-                                Text(
-                                  'Following',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Poppins',
-                                        color: Color(0x67FFFFFF),
-                                        fontWeight: FontWeight.w300,
+                                InkWell(
+                                  onTap: () async {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => FollowingWidget(),
                                       ),
+                                    );
+                                  },
+                                  child: Text(
+                                    'Following',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Poppins',
+                                          color: Color(0x67FFFFFF),
+                                          fontWeight: FontWeight.w300,
+                                        ),
+                                  ),
                                 ),
                               ],
                             ),
