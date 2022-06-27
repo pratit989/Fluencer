@@ -11,3 +11,4 @@ export 'post_viewer/post_viewer_widget.dart' show PostViewerWidget;
 export 'chat/chat_widget.dart' show ChatWidget;
 export 'followers/followers_widget.dart' show FollowersWidget;
 export 'following/following_widget.dart' show FollowingWidget;
+export 'about/about_widget.dart' show AboutWidget;
