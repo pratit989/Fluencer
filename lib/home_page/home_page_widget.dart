@@ -1,3 +1,4 @@
+import '../about/about_widget.dart';
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../components/all_search_users_widget.dart';
@@ -245,22 +246,32 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     tileColor: Color(0xFFF5F5F5),
                     dense: false,
                   ),
-                  ListTile(
-                    title: Text(
-                      'About Fluencer',
-                      style: FlutterFlowTheme.of(context).title3.override(
-                            fontFamily: 'Poppins',
-                            color: Colors.white,
-                            fontWeight: FontWeight.normal,
-                          ),
+                  InkWell(
+                    onTap: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AboutWidget(),
+                        ),
+                      );
+                    },
+                    child: ListTile(
+                      title: Text(
+                        'About Fluencer',
+                        style: FlutterFlowTheme.of(context).title3.override(
+                              fontFamily: 'Poppins',
+                              color: Colors.white,
+                              fontWeight: FontWeight.normal,
+                            ),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                      tileColor: Color(0xFFF5F5F5),
+                      dense: false,
                     ),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                    tileColor: Color(0xFFF5F5F5),
-                    dense: false,
                   ),
                   InkWell(
                     onTap: () async {
