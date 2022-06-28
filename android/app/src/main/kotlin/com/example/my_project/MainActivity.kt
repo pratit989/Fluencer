@@ -1,4 +1,4 @@
-package com.connectia.fluncer
+package com.connectiatech.fluncer
 
 import io.flutter.embedding.android.FlutterActivity
 
