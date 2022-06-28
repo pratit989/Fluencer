@@ -85,7 +85,7 @@ class _PostViewerWidgetState extends State<PostViewerWidget> {
                             functions.indexProvider(widget.postRef,
                                 pageViewPostsRecordList.toList()),
                             pageViewPostsRecordList.length - 1)),
-                    scrollDirection: Axis.horizontal,
+                    scrollDirection: Axis.vertical,
                     itemCount: pageViewPostsRecordList.length,
                     itemBuilder: (context, pageViewIndex) {
                       final pageViewPostsRecord =
